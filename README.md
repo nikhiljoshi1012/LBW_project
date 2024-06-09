@@ -25,13 +25,54 @@ This repository contains the code for a Raga-Taal Notation System. This system a
 ## Usage
 
 1. **Clone the Repository:**
-   ```bash
+   ```cmd
    git clone https://github.com/yourusername/raga-taal-notation-system.git
    cd raga-taal-notation-system
    ```
 
-2. **Open the HTML File:**
-   Open `index.html` in a web browser to start using the application.
+2. **Configure MySql Credentials**
+    - Go to the project directory and run the following command.
+    ```bash
+      cp .env.example .env
+    ```
+    - Open the `.env` file and update the following lines with your MySQL credentials.
+    ```bash
+    22 | DB_CONNECTION=mysql
+    23 | DB_HOST=127.0.0.1 
+    24 | DB_PORT=3306
+    25 | DB_DATABASE=lbw_project
+    ➜26 | DB_USERNAME=root
+    ➜27 | DB_PASSWORD= # Change this to your mysql Credentials
+    ```
+
+3. **Install the Required Packages:**
+    ```bash
+    composer install
+    ```
+
+4. **Migrate the Default DB required by Laravel :**
+    ```bash
+    php artisan migrate
+    ```
+5. **Seed the Default Data required by Laravel :**
+    ```bash
+    php artisan db:seed
+    ```
+6. **Run the Application:**
+    - Run the following command to start the server
+    ```bash
+    php artisan serve
+    ```
+
+7. **Open the Application Views:**
+    - Navigate to
+    ```bash
+    cd LBW_project\LBW_project\resources\views
+    ```
+   
+    
+
+   
 
 ## Details
 
