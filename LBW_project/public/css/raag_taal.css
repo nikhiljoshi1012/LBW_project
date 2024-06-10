@@ -122,9 +122,20 @@
     font-family: 'ome_bhatkhande_hindi';
   }
 
-  .octave-key {
+  .l-key, .L-key, .u-key, .U-key {
     transform: translateX(0.30rem);
   }
   .chhand-key{
     transform: translateX(-0.75rem);
+  }
+  .SPchhand-key{
+    transform: translateX(-0.90rem);
+    font-size: small;
+  }
+  
+  #enter-key{
+    font-family: Arial, Helvetica, sans-serif !important;
+  }
+  #shift-key{
+    font-family: Arial, Helvetica, sans-serif !important;
   }
