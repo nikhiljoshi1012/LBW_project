@@ -1,12 +1,36 @@
 let canAddRows = true;
 var activeCell = null;
 
-const selectedText ={
-  text: "",
-  start: 0,
-  end: 0
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.querySelector("form");
+  form.addEventListener("submit", function (event) {
+      event.preventDefault(); // Prevent default form submission
+      saveData(); // Call the saveData function
+  });
+});
+
+function saveData() {
+  // Serialize cellValues object
+  const serializedData = JSON.stringify(cellValues);
+  // Update the hidden input field with serialized data
+  document.getElementById("project-data-input").value = serializedData;
+  // Submit the form
+  document.querySelector("form").submit();
 }
 
+
+
+const selectedText = {
+  text: "",
+  start: 0,
+  end: 0,
+  
+}
+function selectedStringLength(str) {
+  const regex = /[UuLl]/g;
+  const filteredStr = str.replace(regex, '');
+  return filteredStr.length;
+}
 
 
 function appendText(char) {
@@ -37,6 +61,9 @@ function getSelectedText() {
       if (selectedText.text.length<2) {
         document.getElementById("chhand-key").disabled = true;
       }
+      if (selectedText.text.length<4) {
+        document.getElementById("SPchhand-key").disabled = true;
+      }
     }
     return selectedText;
 }
@@ -57,7 +84,11 @@ function appendOctave(char) {
   const newText = textBefore + updateSelectedText + textAfter;
   document.getElementById("preview-inputbox").value = newText;
 
-  const buttons = [document.getElementById("l-key"), document.getElementById("L-key"), document.getElementById("u-key"), document.getElementById("U-key"), document.getElementById("chhand-key")];
+  const buttons = [document.getElementById("l-key"), 
+                    document.getElementById("L-key"), 
+                    document.getElementById("u-key"), 
+                    document.getElementById("U-key"),
+                    document.getElementById("chhand-key")];
   buttons.forEach((button) => {
     button.disabled = true;
   });
@@ -71,8 +102,32 @@ function appendChhand() {
   let textBefore = previewInputBoxValue.substring(0, selectedText.start);
   let textAfter = previewInputBoxValue.substring(selectedText.end);
   let updateSelectedText = "";
+
   
-  updateSelectedText = chhandList[(selectedText.text.length-2)] + selectedText.text;
+  updateSelectedText = chhandList[(selectedStringLength(selectedText.text)-2)%7] + selectedText.text;
+  const newText = textBefore + updateSelectedText + textAfter;
+  document.getElementById("preview-inputbox").value = newText;
+  console.log(updateSelectedText);
+
+  const buttons = [document.getElementById("l-key"), document.getElementById("L-key"), document.getElementById("u-key"), document.getElementById("U-key"), document.getElementById("chhand-key")];
+  buttons.forEach((button) => {
+    button.disabled = true;
+  });
+}
+function appendSPChhand() {
+  const chhandList = ["`","!","~"]
+
+  getSelectedText();
+
+  let previewInputBoxValue = document.getElementById("preview-inputbox").value;
+  let textBefore = previewInputBoxValue.substring(0, selectedText.start);
+  let textAfter = previewInputBoxValue.substring(selectedText.end);
+  let updateSelectedText = "";
+
+  const selectedLength = selectedStringLength(selectedText.text);
+  const charIndex = Math.floor((selectedLength - 4) / 2);
+  
+  updateSelectedText = chhandList[charIndex] + selectedText.text;
   const newText = textBefore + updateSelectedText + textAfter;
   document.getElementById("preview-inputbox").value = newText;
   console.log(updateSelectedText);
@@ -84,7 +139,94 @@ function appendChhand() {
 }
 
 
+var shiftKey = 0;
 
+const keyboard = {0:{
+    'SA-key': { text: 's', onclick: 'appendText', disabled: false },
+    'RE-key': { text: 'r', onclick: 'appendText', disabled: false },
+    'GA-key': { text: 'g', onclick: 'appendText', disabled: false },
+    'MA-key': { text: 'm', onclick: 'appendText', disabled: false },
+    'PA-key': { text: 'p', onclick: 'appendText', disabled: false },
+    'DHA-key': { text: 'd', onclick: 'appendText', disabled: false },
+    'NI-key': { text: 'n', onclick: 'appendText', disabled: false },
+    'l-key': { text: 'l', onclick: 'appendOctave', disabled: true },
+    'L-key': { text: 'L', onclick: 'appendOctave', disabled: true },
+    'khali-key': { text: '-', onclick: 'appendText', disabled: false },
+    'enter-key': { text: 'Enter', onclick: 'updateCellValue', disabled: false },
+    'SAf-key': { text: 'S', onclick: 'appendText', disabled: false },
+    'REf-key': { text: 'R', onclick: 'appendText', disabled: false },
+    'GAf-key': { text: 'G', onclick: 'appendText', disabled: false },
+    'MAf-key': { text: 'M', onclick: 'appendText', disabled: false },
+    'PAf-key': { text: 'P', onclick: 'appendText', disabled: false },
+    'DHAf-key': { text: 'D', onclick: 'appendText', disabled: false },
+    'NIf-key': { text: 'N', onclick: 'appendText', disabled: false },
+    'u-key': { text: 'u', onclick: 'appendOctave', disabled: true },
+    'U-key': { text: 'U', onclick: 'appendOctave', disabled: true },
+    'chhand-key': { text: '@', onclick: 'appendChhand', disabled: true },
+    'shift-key': { text: 'Shift', onclick: 'toggleShiftKey', disabled: false }
+},
+1:{
+  '0-key': { text: '0', onclick: 'appendText', disabled: false },
+  '1-key': { text: '1', onclick: 'appendText', disabled: false },
+  '2-key': { text: '2', onclick: 'appendText', disabled: false },
+  '3-key': { text: '3', onclick: 'appendText', disabled: false },
+  '4-key': { text: '4', onclick: 'appendText', disabled: false },
+  '5-key': { text: '5', onclick: 'appendText', disabled: false },
+  '6-key': { text: '6', onclick: 'appendText', disabled: false },
+  '7-key': { text: '7', onclick: 'appendText', disabled: false },
+  '8-key': { text: '8', onclick: 'appendText', disabled: false },
+  '9-key': { text: '9', onclick: 'appendText', disabled: false },
+  'enter-key': { text: 'Enter', onclick: 'updateCellValue', disabled: false },
+  'x-key': { text: 'x', onclick: 'appendText', disabled: false },
+  '_-key': { text: '_', onclick: 'appendText', disabled: false },
+  ',-key': { text: ',', onclick: 'appendText', disabled: false },
+  '+-key': { text: '+', onclick: 'appendText', disabled: false },
+  ';-key': { text: ';', onclick: 'appendText', disabled: false },
+  'aptr-key': { text: "'", onclick: 'appendText', disabled: false },
+  '[-key': { text: '[', onclick: 'appendText', disabled: false },
+  ']-key': { text: ']', onclick: 'appendText', disabled: false },
+  'dir-key': { text: "\\", onclick: 'appendText', disabled: false },
+  'SPchhand-key': { text: '`', onclick: 'appendSPChhand', disabled: true },
+  'shift-key': { text: 'Shift', onclick: 'toggleShiftKey', disabled: false }
+}
+
+};
+
+function createKeyboard() {
+  const keyboardContainer = document.getElementById('keylayout');
+  keyboardContainer.innerHTML = '';
+  let keys = keyboard[shiftKey];
+  for (let key in keys) {
+
+      const button = document.createElement('button');
+      button.className = 'key';
+      button.id = key;
+      button.disabled = keys[key].disabled;
+      button.onclick = function() { window[keys[key].onclick](keys[key].text); };
+
+      if(key=="chhand-key"||key=="u-key"||key=="U-key"||key=="l-key"||key=="L-key"||key=="SPchhand-key"){
+        const childDiv=document.createElement('div');
+        childDiv.className = key;
+        childDiv.textContent = keys[key].text;
+
+        button.appendChild(childDiv);
+      }
+      else{      
+        button.textContent = keys[key].text;
+      }
+      keyboardContainer.appendChild(button);
+    }
+}
+
+
+function toggleShiftKey() {
+  shiftKey = (shiftKey+1) %2;
+  createKeyboard();
+}
+
+// Call createKeyboard on page load
+document.addEventListener('DOMContentLoaded', function() {
+createKeyboard();});
 
 function setActiveCell(cell) {
   activeCell = cell;
