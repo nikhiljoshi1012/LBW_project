@@ -37,7 +37,7 @@
         </form>
     </div>
     <!-- Include your script.js file -->
-    <script src="{{ asset('js/script.js') }}"></script>
+    <script src="{{ asset('js/raag_taal.js') }}"></script>
 </body>
 
 </html>
