@@ -35,6 +35,10 @@ This repository contains the code for a Raga-Taal Notation System. This system a
     ```bash
       cp .env.example .env
     ```
+    or for #Windows
+   ```bash
+      copy .env.example .env
+    ```
     - Open the `.env` file and update the following lines with your MySQL credentials.
     ```bash
     22 | DB_CONNECTION=mysql
@@ -45,26 +49,26 @@ This repository contains the code for a Raga-Taal Notation System. This system a
     ➜27 | DB_PASSWORD= # Change this to your mysql Credentials
     ```
 
-3. **Install the Required Packages:**
+4. **Install the Required Packages:**
     ```bash
     composer install
     ```
 
-4. **Migrate the Default DB required by Laravel :**
+5. **Migrate the Default DB required by Laravel :**
     ```bash
     php artisan migrate
     ```
-5. **Seed the Default Data required by Laravel :**
+6. **Seed the Default Data required by Laravel :**
     ```bash
     php artisan db:seed
     ```
-6. **Run the Application:**
+7. **Run the Application:**
     - Run the following command to start the server
     ```bash
     php artisan serve
     ```
 
-7. **Open the Application Views:**
+8. **Open the Application Views:**
     - Navigate to
     ```bash
     cd LBW_project\LBW_project\resources\views
