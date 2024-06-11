@@ -16,7 +16,7 @@ class DashboardController extends Controller
 
     public function create()
     {
-        return view('raaga_taal');
+        return view('raaga_taal'); //TODO : Change the view name to a more systematic name
     }
 
     public function store(Request $request)

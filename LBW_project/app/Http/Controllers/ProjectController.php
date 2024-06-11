@@ -18,7 +18,7 @@ class ProjectController extends Controller
 
     public function create()
     {
-        return view('projects.create');
+        return view('raaga_taal'); //TODO : Change the view name to a more systematic name
     }
 
     public function store(Request $request)

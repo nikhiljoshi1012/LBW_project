@@ -9,40 +9,32 @@
     </head>
     <body>
         
-        <div class="container">
+    <div class="container">
+        <form action="{{ route('projects.store') }}" method="POST">
+            @csrf <!-- CSRF Token -->
+            <label for="project-name">Project Name:</label>
+            <input type="text" id="project-name" name="name" />
+            <br />
+            <label for="column-count">Select number of columns:</label>
+            <select id="column-count" name="column_count">
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+            </select>
+            <button onclick="generateTable()" type="button">Generate Table</button>
+            <div id="table-container"></div>
+            <button id="add-rows-button" onclick="addRows()" type="button">Add More Rows</button>
+            <div id="string-output"></div>
+            <!-- Add a hidden input field to store project data -->
+            <input type="hidden" name="project_data" id="project-data-input">
 
-            <form action="{{ route('projects.store') }}" method="POST">
-
-                @csrf <!-- CSRF Token -->
-
-                <label for="project-name">Project Name:</label>
-
-                <input type="text" id="project-name" name="name" />
-
-                <br />
-                <label for="column-count">Select number of columns:</label>
-                <select id="column-count">
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
-                    <option value="16">16</option>
-                </select>
-                <button onclick="generateTable()">Generate Table</button>
-                <div class="container" id="table-container"></div>
-                <button id="add-rows-button" onclick="addRows()">Add More Rows</button>
-                <div id="string-output"></div>
-
-                <!-- Add a hidden input field to store project data -->
-
-                <input type="hidden" name="project_data" id="project-data-input">
-
-                <input type="submit" id="save-button" value="Save">
-
-            </form>
-        </div>
+            <input type="submit" id="save-button" value="Save">
+        </form>
+    </div>
         <script src="{{ asset('js/raag_taal.js') }}"></script>
         <div class="keyboard-container">
             <div class="preview-input">

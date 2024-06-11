@@ -1,5 +1,6 @@
 let canAddRows = true;
 var activeCell = null;
+var shiftKey = 0;
 
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.querySelector("form");
@@ -9,14 +10,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-function saveData() {
-  // Serialize cellValues object
-  const serializedData = JSON.stringify(cellValues);
-  // Update the hidden input field with serialized data
-  document.getElementById("project-data-input").value = serializedData;
-  // Submit the form
-  document.querySelector("form").submit();
-}
 
 
 
@@ -61,7 +54,7 @@ function getSelectedText() {
       if (selectedText.text.length<2) {
         document.getElementById("chhand-key").disabled = true;
       }
-      if (selectedText.text.length<4) {
+      if (shiftKey==1 && selectedText.text.length<4) {
         document.getElementById("SPchhand-key").disabled = true;
       }
     }
@@ -73,22 +66,22 @@ function appendOctave(char) {
   let textBefore = previewInputBoxValue.substring(0, selectedText.start);
   let textAfter = previewInputBoxValue.substring(selectedText.end);
   let updateSelectedText = "";
-  
+
   for (let i = 0; i < selectedText.text.length; i++) {
-    if (["u", "U", "l", "L"].includes(selectedText.text[i])) {
+    if (["u", "U", "l", "L"].includes(selectedText.text[i]) && i !== 0) {
       continue;
-    } else {
+    } 
+    else if (["u", "U", "l", "L"].includes(selectedText.text[i]) && i === 0){
+      updateSelectedText += selectedText.text[i];
+    } 
+    else {
       updateSelectedText += selectedText.text[i] + char;
     }
   }
   const newText = textBefore + updateSelectedText + textAfter;
   document.getElementById("preview-inputbox").value = newText;
 
-  const buttons = [document.getElementById("l-key"), 
-                    document.getElementById("L-key"), 
-                    document.getElementById("u-key"), 
-                    document.getElementById("U-key"),
-                    document.getElementById("chhand-key")];
+  const buttons = [document.getElementById("l-key"), document.getElementById("L-key"), document.getElementById("u-key"), document.getElementById("U-key"), document.getElementById("chhand-key")];
   buttons.forEach((button) => {
     button.disabled = true;
   });
@@ -139,7 +132,7 @@ function appendSPChhand() {
 }
 
 
-var shiftKey = 0;
+
 
 const keyboard = {0:{
     'SA-key': { text: 's', onclick: 'appendText', disabled: false },
@@ -226,7 +219,9 @@ function toggleShiftKey() {
 
 // Call createKeyboard on page load
 document.addEventListener('DOMContentLoaded', function() {
-createKeyboard();});
+createKeyboard();
+
+});
 
 function setActiveCell(cell) {
   activeCell = cell;
@@ -235,12 +230,13 @@ function setActiveCell(cell) {
 
 const cellValues = {
   rowCount: 14, // Initial row count
-  columnCount: 10, // Default column count
+  columnCount: 5, // Default column count
   cells: {}, // Object to store cell positions and their values
 };
 
 function updateCellValue(){
   activeCell.value = document.getElementById("preview-inputbox").value;
+  captureActiveCell();
 }
 
 // Function to generate row identifiers
@@ -443,9 +439,35 @@ function captureInput(event, inputs, columnCount) {
   updateCellValuesDisplay();
 }
 
+function captureActiveCell(event, inputs, columnCount) {
+  const cell = activeCell;
+  const value = activeCell.value;
+
+  if (value) {
+    cellValues.cells[cell] = value;
+  } else {
+    delete cellValues.cells[cell]; // Remove the key if input is empty
+  }
+  updateCellValuesDisplay();
+}
+
+
+
+
 function updateCellValuesDisplay() {
   document.getElementById(
     "string-output"
   ).innerText = `Cell Values: ${JSON.stringify(cellValues)}`;
   console.log(cellValues); // For debugging purposes
+}
+
+function saveData() {
+  // Serialize cellValues object
+  console.log("clicked")
+  const serializedData = JSON.stringify(cellValues);
+  console.log(serializedData)
+  // Update the hidden input field with serialized data
+  document.getElementById("project-data-input").value = serializedData;
+  // Submit the form
+  document.querySelector("form").submit();
 }
