@@ -293,7 +293,7 @@ function generateRowIdentifier(index) {
 function generateTable() {
     const columnCount = parseInt(
         document.getElementById("column-count").value,
-        5
+        10
     );
     const tableContainer = document.getElementById("table-container");
     tableContainer.innerHTML = ""; // Clear previous table
@@ -372,17 +372,19 @@ function generateTable() {
     if (inputs.length > 0) {
         inputs[0].focus(); // Focus the first cell to trigger the highlight
     }
+    updateCellValuesDisplay();
 }
 
 function addRows() {
-    if (!canAddRows) {
-        alert("Please wait 5 seconds before adding more rows.");
+    const addButton = document.getElementById("add-rows-button");
+
+    if (addButton.disabled) {
         return;
     }
 
-    canAddRows = false; // Disable the button
+    addButton.disabled = true; // Disable the button
     setTimeout(() => {
-        canAddRows = true; // Re-enable the button after 5 seconds
+        addButton.disabled = false; // Re-enable the button after 5 seconds
     }, 5000);
 
     const tbody = document.getElementById("table-body");
@@ -406,7 +408,7 @@ function addRows() {
             const td = document.createElement("td");
             td.innerHTML = `<code><input type="text" style="min-width: 150px; border: none; outline: none; font-family: ome_bhatkhande_hindi;" data-cell="${
                 existingRowCount + i
-            }-${j}"></code>`;
+            }-${j}" onfocus="setActiveCell(this)"></code>`;
 
             if ((j + 1) % 4 === 0) {
                 td.classList.add("bold-right-border");
