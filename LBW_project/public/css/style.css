@@ -3,14 +3,8 @@
     padding: 0;
     box-sizing: border-box;
 }
-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    height: 100vh;
-}
 
+/* Table Container Styles */
 #table-container {
     width: 75vw; /* Set to 75% of the viewport width */
     max-width: 100%; /* Ensure table does not exceed container */
@@ -18,51 +12,7 @@ body {
     overflow-x: auto;
     overflow-y: auto;
     margin: 20px auto; /* Center the container horizontally */
-}
-
-table.composition {
-    border-spacing: 0;
-    width: 100%;
-}
-
-table.composition th,
-table.composition td.identifier-cell {
-    font-family: Arial, sans-serif;
-    text-align: center;
-}
-
-table.composition td {
-    border-right: 1px solid lightgray;
-    width: 10px; /* Set a fixed width for each cell */
-    height: 10px; /* Set a fixed height for each cell */
-    text-align: center;
-    font-family: "ome_bhatkhande_hindi";
-}
-
-table.composition td > code {
-    white-space: pre;
-    font-family: "ome_bhatkhande_hindi";
-}
-
-table.composition td > code > input {
-    white-space: pre;
-    font-family: "ome_bhatkhande_hindi";
-    width: 100%;
-    border: none;
-    outline: none;
-}
-
-table.composition td.bold-right-border {
-    border-right: 3px solid black;
-}
-
-table.composition td.bold-bottom-border,
-table.composition tr.bold-bottom-border td {
-    border-bottom: 3px solid black !important;
-}
-
-/* Define scrollbar styles */
-#table-container {
+    display: none;
     scrollbar-width: thin;
     scrollbar-color: rgba(155, 155, 155, 0.5) rgba(255, 255, 255, 0.1);
 }
@@ -81,10 +31,63 @@ table.composition tr.bold-bottom-border td {
     border: 3px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Buttons Styles */
+#add-rows-button,
+#save-button,
+#string-output,
+#json-string-container {
+    display: none;
+}
+
+/* Table Styles */
+table.composition {
+    border-spacing: 0;
+    width: 100%;
+}
+
+table.composition th,
+table.composition td.identifier-cell {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+table.composition td {
+    border-right: 1px solid lightgray;
+    width: 50px; /* Set a fixed width for each cell */
+    height: 50px; /* Set a fixed height for each cell */
+    text-align: center;
+    font-family: "ome_bhatkhande_hindi";
+}
+
+table.composition td > code {
+    white-space: pre;
+    font-family: "ome_bhatkhande_hindi";
+}
+
+table.composition td > code > input {
+    white-space: pre;
+    font-family: "ome_bhatkhande_hindi";
+    width: 100%;
+    height: 100%; /* Make the input fill the cell */
+    border: none;
+    outline: none;
+}
+
+table.composition td.bold-right-border {
+    border-right: 3px solid black;
+}
+
+table.composition td.bold-bottom-border,
+table.composition tr.bold-bottom-border td {
+    border-bottom: 3px solid black !important;
+}
+
+/* Highlighted Cell Styles */
 .highlighted {
     background-color: lightgray;
 }
 
+/* Preview Input Box Styles */
 #preview-inputbox {
     font-family: "ome_bhatkhande_hindi";
     padding: 20px 0;
@@ -92,21 +95,21 @@ table.composition tr.bold-bottom-border td {
     height: 2rem;
     font-size: 1em;
     margin: 10px 0;
-    font-family: "ome_bhatkhande_hindi";
 }
 
+/* Keyboard Container Styles */
 .keyboard-container {
-    display: flex;
+    display: none;
     grid-template-columns: auto;
     grid-template-rows: repeat(2, auto);
     gap: 10px;
-
     flex-direction: column;
     align-items: center;
     justify-content: center;
     margin-top: 20px;
 }
 
+/* Key Layout Styles */
 .keylayout {
     display: grid;
     grid-template-columns: repeat(11, 1fr);
@@ -122,23 +125,45 @@ table.composition tr.bold-bottom-border td {
     font-family: "ome_bhatkhande_hindi";
 }
 
+/* Specific Key Styles */
 .l-key,
 .L-key,
 .u-key,
 .U-key {
     transform: translateX(0.3rem);
 }
+
 .chhand-key {
     transform: translateX(-0.75rem);
 }
+
 .SPchhand-key {
     transform: translateX(-0.9rem);
     font-size: small;
 }
 
-#enter-key {
-    font-family: Arial, Helvetica, sans-serif !important;
-}
+/* Enter and Shift Key Styles */
+#enter-key,
 #shift-key {
     font-family: Arial, Helvetica, sans-serif !important;
+}
+
+/* User Input Styles */
+.userInput {
+    width: 75vw;
+    margin: 5rem auto;
+    padding: 5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1),
+        0 16px 32px rgba(0, 0, 0, 0.1);
+}
+
+.userInput .form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.userInput .form-control,
+.userInput .form-select {
+    margin-bottom: 1rem;
 }

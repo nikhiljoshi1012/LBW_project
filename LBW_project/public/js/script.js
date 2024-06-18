@@ -372,7 +372,14 @@ function generateTable() {
     if (inputs.length > 0) {
         inputs[0].focus(); // Focus the first cell to trigger the highlight
     }
+
     updateCellValuesDisplay();
+
+    tableContainer.style.display = "block";
+    document.getElementById("add-rows-button").style.display = "inline";
+    document.getElementById("save-button").style.display = "inline";
+    document.getElementsByClassName("keyboard-container")[0].style.display =
+        "flex";
 }
 
 function addRows() {
