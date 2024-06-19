@@ -13,7 +13,7 @@
         <form action="{{ route('projects.store') }}" method="POST">
             @csrf <!-- CSRF Token -->
             <label for="project-name">Project Name:</label>
-            <input type="text" id="project-name" name="name" />
+            <input type="text" id="project-name" name="name" value="{{ $project->name ?? 'Untitled ' . now() }}" />
             <br />
             <label for="column-count">Select number of columns:</label>
             <select id="column-count" name="column_count">

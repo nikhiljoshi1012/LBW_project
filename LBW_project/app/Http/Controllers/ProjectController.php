@@ -15,10 +15,40 @@ class ProjectController extends Controller
         $projects = Project::where('user_id', Auth::id())->get();
         return view('projects.index', compact('projects'));
     }
+    public function projectList()
+    {
+        // Show only the projects that belong to the authenticated user
+        $projects = Project::where('user_id', Auth::id())->get();
+        return response()->json($projects);
+    }
+
+    public function newUntitled()
+    {
+        $user = Auth::user();
+        $projectNames = Project::where('user_id', $user->id)->pluck('name')->toArray();
+
+        $untitledCount = 1;
+        $newProjectName = 'Untitled';
+
+        while (in_array($newProjectName, $projectNames)) {
+            $newProjectName = 'Untitled ' . $untitledCount;
+            $untitledCount++;
+        }
+
+        return $newProjectName;
+    }
+
 
     public function create()
     {
-        return view('raaga_taal'); //TODO : Change the view name to a more systematic name
+        $projectNames = Project::where('user_id', Auth::id())->pluck('name');
+        $project = new Project();
+        $project->name = $this->newUntitled();
+        $project->data = json_encode([]); // Store decoded data
+        $project->user_id = Auth::id(); // Set the user ID for the project
+        $project->save();
+        
+        return view('raaga_taal', compact('project')); //TODO : Change the view name to a more systematic name
     }
 
     public function store(Request $request)
@@ -32,13 +62,28 @@ class ProjectController extends Controller
         // Decode JSON data
         $projectData = json_decode($request->input('project_data'), true);
 
-        $project = new Project();
-        $project->name = $request->input('name');
-        $project->data = $projectData; // Store decoded data
-        $project->user_id = Auth::id(); // Set the user ID for the project
-        $project->save();
+        // Find the existing project for the authenticated user
+        $project = Project::where('user_id', Auth::id())->first();
 
-        return redirect()->route('dashboard')->with('success', 'Project created successfully.');
+        if ($project) {
+            // Update the project data
+            $project->name = $request->input('name');
+            $project->data = $projectData;
+            $project->save();
+
+            return redirect()->route('dashboard')->with('success', 'Project data updated successfully.');
+        } else {
+            // Create a new project if none exists
+            $project = new Project();
+            $project->name = $request->input('name');
+            $project->data = $projectData;
+            $project->user_id = Auth::id();
+            $project->save();
+
+            return redirect()->route('dashboard')->with('success', 'New project created successfully.');
+        }
+
+        //return redirect()->route('dashboard')->with('success', 'Project created successfully.');
     }
 
     public function show($id)

@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
         event.preventDefault(); // Prevent default form submission
         saveData(); // Call the saveData function
     });
+    createKeyboard();
+    generateTable();
 });
 
 const selectedText = {
@@ -259,10 +261,7 @@ function toggleShiftKey() {
     createKeyboard();
 }
 
-// Call createKeyboard on page load
-document.addEventListener("DOMContentLoaded", function () {
-    createKeyboard();
-});
+
 
 function setActiveCell(cell) {
     activeCell = cell;
