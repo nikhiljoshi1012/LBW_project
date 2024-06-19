@@ -59,4 +59,31 @@ class ProjectController extends Controller
 
         return view('projects.show', compact('project'));
     }
+
+    public function update(Request $request, $id)
+    {
+        Log::debug('Request received in update method', ['request' => $request->all()]);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'project_data' => 'required|string', // Assuming project_data is still a JSON string
+        ]);
+
+        $project = Project::findOrFail($id);
+
+        // Ensure the authenticated user is the owner of the project
+        if ($project->user_id !== Auth::id()) {
+            return redirect()->route('dashboard')->with('error', 'Unauthorized action.');
+        }
+
+        // Decode JSON data
+        $projectData = json_decode($request->input('project_data'), true);
+
+        $project->name = $request->input('name');
+        $project->data = $projectData; // Store decoded data
+        $project->save();
+
+        session()->flash('success', 'Project updated successfully.');
+        return response()->json(['success' => true]);
+    }
+
 }

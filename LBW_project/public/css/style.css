@@ -15,6 +15,8 @@
     display: none;
     scrollbar-width: thin;
     scrollbar-color: rgba(155, 155, 155, 0.5) rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1),
+        0 16px 32px rgba(0, 0, 0, 0.1);
 }
 
 #table-container::-webkit-scrollbar {
@@ -34,6 +36,7 @@
 /* Buttons Styles */
 #add-rows-button,
 #save-button,
+#update-button,
 #string-output,
 #json-string-container {
     display: none;
@@ -71,6 +74,7 @@ table.composition td > code > input {
     height: 100%; /* Make the input fill the cell */
     border: none;
     outline: none;
+    text-align: center;
 }
 
 table.composition td.bold-right-border {
@@ -79,12 +83,18 @@ table.composition td.bold-right-border {
 
 table.composition td.bold-bottom-border,
 table.composition tr.bold-bottom-border td {
-    border-bottom: 3px solid black !important;
+    border-bottom: 1px solid gray;
 }
 
 /* Highlighted Cell Styles */
 .highlighted {
-    background-color: lightgray;
+    background-color: white;
+    box-shadow: 
+        0 1px 2px rgba(0, 0, 0, 0.05), 
+        0 2px 4px rgba(0, 0, 0, 0.07), 
+        0 4px 8px rgba(0, 0, 0, 0.1),
+        0 8px 16px rgba(0, 0, 0, 0.12),
+        0 16px 32px rgba(0, 0, 0, 0.15);
 }
 
 /* Preview Input Box Styles */
@@ -107,6 +117,12 @@ table.composition tr.bold-bottom-border td {
     align-items: center;
     justify-content: center;
     margin-top: 20px;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.1), 
+        0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 /* Key Layout Styles */
@@ -123,6 +139,9 @@ table.composition tr.bold-bottom-border td {
     min-height: 2rem;
     font-size: 1em;
     font-family: "ome_bhatkhande_hindi";
+    box-shadow: 
+        0 1px 2px rgba(0, 0, 0, 0.1), 
+        0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 /* Specific Key Styles */
