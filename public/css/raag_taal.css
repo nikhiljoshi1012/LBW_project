@@ -1,0 +1,141 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+  }
+  
+  #table-container {
+    width: 90%;
+    height: 60vh; /* Adjust height as needed */
+    overflow-x: auto; /* Added this line */
+    overflow-y: auto; /* Keep vertical scrollbar */
+    margin-top: 20px;
+  }
+  
+  table.composition {
+    border-spacing: 0;
+    width: 100%;
+  }
+  
+  table.composition th,
+  table.composition td.identifier-cell {
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  
+  table.composition td {
+    border: 1px solid black;
+    padding: 2px;
+    text-align: center;
+    font-family: "ome_bhatkhande_hindi";
+  }
+  
+  table.composition td > code {
+    white-space: pre;
+    font-family: "ome_bhatkhande_hindi";
+  }
+  
+  table.composition td > code > input {
+    white-space: pre;
+    font-family: "ome_bhatkhande_hindi";
+    width: 100%;
+    border: none;
+    outline: none;
+  }
+  
+  table.composition td.bold-right-border {
+    border-right: 3px solid black;
+  }
+  
+  table.composition td.bold-bottom-border,
+  table.composition tr.bold-bottom-border td {
+    border-bottom: 3px solid black !important;
+  }
+  
+  /* Define scrollbar styles */
+  #table-container {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(155, 155, 155, 0.5) rgba(255, 255, 255, 0.1);
+  }
+  
+  #table-container::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  #table-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  #table-container::-webkit-scrollbar-thumb {
+    background-color: rgba(155, 155, 155, 0.5);
+    border-radius: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .highlighted {
+    background-color: lightgray;
+  }
+
+
+  #preview-inputbox{
+    font-family: "ome_bhatkhande_hindi";
+    padding: 20px 0;
+    width: 100%;
+    height: 2rem;
+    font-size: 1em;
+    margin: 10px 0;
+    font-family: 'ome_bhatkhande_hindi';
+  }
+
+  .keyboard-container {
+    display: flex;
+    grid-template-columns: auto;
+    grid-template-rows: repeat(2, auto);
+    gap: 10px;
+    
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .keylayout {
+    display: grid;
+    grid-template-columns: repeat(11, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 10px;
+  }
+  
+  .key {
+    width: 100%;
+    min-width: 3rem;
+    min-height: 2rem;
+    font-size: 1em;
+    font-family: 'ome_bhatkhande_hindi';
+  }
+
+  .l-key, .L-key, .u-key, .U-key {
+    transform: translateX(0.30rem);
+  }
+  .chhand-key{
+    transform: translateX(-0.75rem);
+  }
+  .SPchhand-key{
+    transform: translateX(-0.90rem);
+    font-size: small;
+  }
+  
+  #enter-key{
+    font-family: Arial, Helvetica, sans-serif !important;
+  }
+  #shift-key{
+    font-family: Arial, Helvetica, sans-serif !important;
+  }
