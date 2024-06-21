@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <code style="font-family: ome_bhatkhande_hindi">hello</code>
+    <code>hello</code>
     <table>
         <tbody>
             @if (is_array($output) || is_object($output))
@@ -21,28 +21,26 @@
                                 @php
                                     $decodedSubItem = json_encode($subItem);
                                 @endphp
-                                <td class="container" id="table-container">
-                                    <code style="font-family: ome_bhatkhande_hindi">{{ $decodedSubItem }}</code>
+                                <td class="container" id="table-container" style="font-family: ome_bhatkhande_hindi">
+                                    <code>{{ $decodedSubItem }}</code>
                                 </td>
                             @endforeach
                         </tr>
                     @else
                         <tr>
-                            <td class="container" id="table-container">
-                                <code
-                                    style="font-family: ome_bhatkhande_hindi>{{ json_encode($item) }}</code>
+                            <td class="container" id="table-container" style="font-family: ome_bhatkhande_hindi">
+                                <code>{{ json_encode($item) }}</code>
                             </td>
                         </tr>
-@endif
-@endforeach
-@else
-<tr>
-                    <td class="container"
-                                    id="table-container">
-                                    <code style="font-family: ome_bhatkhande_hindi>{{ json_encode($output) }}</code>
-                            </td>
-                        </tr>
-                           @endif
+                    @endif
+                @endforeach
+            @else
+                <tr>
+                    <td class="container" id="table-container" style="font-family: ome_bhatkhande_hindi">
+                        <code>{{ json_encode($output) }}</code>
+                    </td>
+                </tr>
+            @endif
         </tbody>
     </table>
 </body>
