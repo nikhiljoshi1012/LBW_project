@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.success) {
-                        window.location.href = `/projects/${projectId}`;
+                        window.location.href = `/dashboard`; // Manually redirect to the dashboard
                     } else {
                         console.error("Update failed:", data);
                     }
@@ -136,38 +136,37 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
     // Function to add more rows
-    // function addRows() {
-    //     const tableBody = document.getElementById("table-body");
-    //     const currentRowCount = tableBody.rows.length;
-    //     const currentColumnCount = tableBody.rows[0].cells.length - 1; // Exclude the row identifier column
+    function addRows() {
+        const tableBody = document.getElementById("table-body");
+        const currentRowCount = tableBody.rows.length;
+        const currentColumnCount = tableBody.rows[0].cells.length - 1; // Exclude the row identifier column
 
-    //     const newRow = document.createElement("tr");
+        const newRow = document.createElement("tr");
 
-    //     // Add row identifier cell
-    //     const rowIdentifierCell = document.createElement("td");
-    //     rowIdentifierCell.textContent = generateRowIdentifier(currentRowCount);
-    //     rowIdentifierCell.className = "identifier-cell"; // Add class to style
-    //     newRow.appendChild(rowIdentifierCell);
+        // Add row identifier cell
+        const rowIdentifierCell = document.createElement("td");
+        rowIdentifierCell.textContent = generateRowIdentifier(currentRowCount);
+        rowIdentifierCell.className = "identifier-cell"; // Add class to style
+        newRow.appendChild(rowIdentifierCell);
 
-    //     for (let j = 0; j < currentColumnCount; j++) {
-    //         const newCell = document.createElement("td");
-    //         const cellKey = `${currentRowCount}-${j}`;
-    //         newCell.innerHTML = `<code><input type="text" style="min-width: 150px; border: none; outline: none; font-family: ome_bhatkhande_hindi;" data-cell="${cellKey}" maxlength="4" value=""></code>`;
+        for (let j = 0; j < currentColumnCount; j++) {
+            const newCell = document.createElement("td");
+            const cellKey = `${currentRowCount}-${j}`;
+            newCell.innerHTML = `<code><input type="text" style="min-width: 150px; border: none; outline: none; font-family: ome_bhatkhande_hindi;" data-cell="${cellKey}" maxlength="4" value=""></code>`;
 
-    //         if ((j + 1) % 4 === 0) {
-    //             newCell.classList.add("bold-right-border");
-    //         }
-    //         newRow.appendChild(newCell);
-    //     }
+            if ((j + 1) % 4 === 0) {
+                newCell.classList.add("bold-right-border");
+            }
+            newRow.appendChild(newCell);
+        }
 
-    //     if (currentRowCount % 2 === 1) {
-    //         newRow.classList.add("bold-bottom-border");
-    //     }
-    //     tableBody.appendChild(newRow);
-    // }
+        if (currentRowCount % 2 === 1) {
+            newRow.classList.add("bold-bottom-border");
+        }
+        tableBody.appendChild(newRow);
+    }
 
-    // document
-    //     .getElementById("add-rows-button")
-    //     .addEventListener("click", addRows);
+    document
+        .getElementById("add-rows-button")
+        .addEventListener("click", addRows);
 });
-

@@ -9,9 +9,6 @@ use App\Http\Controllers\ProjectController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/raaga_taal', function () {
-    return view('raaga_taal');
-});
 
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
@@ -22,5 +19,8 @@ Route::get('/dashboard', [ProjectController::class, 'index'])->middleware('auth'
 
 // Project routes
 Route::resource('projects', ProjectController::class)->middleware('auth');
+Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->middleware('auth')->name('projects.destroy');
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+

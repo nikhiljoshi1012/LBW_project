@@ -86,4 +86,20 @@ class ProjectController extends Controller
         return response()->json(['success' => true]);
     }
 
+    public function destroy($id)
+    {
+        $project = Project::findOrFail($id);
+
+        // Ensure the authenticated user is the owner of the project
+        if ($project->user_id !== Auth::id()) {
+            return redirect()->route('dashboard')->with('error', 'Unauthorized action.');
+        }
+
+        $project->delete();
+
+        return redirect()->route('dashboard')->with('success', 'Project deleted successfully.');
+    }
+
+
+
 }
