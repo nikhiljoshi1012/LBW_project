@@ -12,6 +12,7 @@
 <body>
     <h1>{{ $title }}</h1>
     <code>{{ $date }}</code>
+    <p>Testing</p>
 
     <br>
     <table>
