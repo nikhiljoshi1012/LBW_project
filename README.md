@@ -1,66 +1,115 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# LBW_project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Raga-Taal Notation System
 
-## About Laravel
+## Introduction
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This repository contains the code for a Raga-Taal Notation System. This system allows users to select a raga and a taal, and then input musical notations on a grid interface based on the selected taal's beats. The application provides a user-friendly interface to understand and use the musical notations associated with Indian classical music.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-   **Raga Selection:** Allows the user to select a raga from a dropdown list.
+-   **Taal Selection:** Allows the user to select a taal from a dropdown list.
+-   **Notation Grid:** A dynamic grid for inputting musical notations. The number of columns adjusts based on the number of beats in the selected taal.
+-   **Saptak Handling:** Supports input of notes across three octaves: Madhya Saptak (normal), Mandra Saptak (lower), and Taar Saptak (higher).
+-   **Note Types:** Supports shuddha (natural), komal (flat), and tivra (sharp) notes.
 
-## Learning Laravel
+## Files
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+-   `index.html` - The main HTML file containing the structure of the application.
+-   `style.css` - The CSS file for styling the application.
+-   `script.js` - The JavaScript file containing the logic for dynamic grid generation and notation input.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Usage
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. **Clone the Repository:**
 
-## Laravel Sponsors
+    ```cmd
+    git clone https://github.com/yourusername/raga-taal-notation-system.git
+    cd raga-taal-notation-system
+    ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+2. **Configure MySql Credentials**
 
-### Premium Partners
+    - Go to the project directory and run the following command.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+    ```bash
+      cp .env.example .env
+    ```
 
-## Contributing
+    or for #Windows
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    ```bash
+       copy .env.example .env
+    ```
 
-## Code of Conduct
+    - Open the `.env` file and update the following lines with your MySQL credentials.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    ```bash
+    22 | DB_CONNECTION=mysql
+    23 | DB_HOST=127.0.0.1
+    24 | DB_PORT=3306
+    25 | DB_DATABASE=lbw_project
+    ➜26 | DB_USERNAME=root
+    ➜27 | DB_PASSWORD= # Change this to your mysql Credentials
+    ```
 
-## Security Vulnerabilities
+3. **Install the Required Packages:**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    ```bash
+    composer install
+    ```
 
-## License
+4. **Migrate the Default DB required by Laravel :**
+    ```bash
+    php artisan migrate
+    ```
+5. **Seed the Default Data required by Laravel :**
+    ```bash
+    php artisan db:seed
+    ```
+6. **Run the Application:**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    - Run the following command to start the server
+
+    ```bash
+    php artisan serve
+    ```
+
+7. **Open the Application Views:**
+    - Navigate to
+    ```bash
+    cd LBW_project\LBW_project\resources\views
+    ```
+
+## Details
+
+### Screen 1 - Raga and Taal Selection
+
+-   **Select Name of the Raga:**
+    A dropdown list populated from a `raag_name_master` table (fields: `raag_id`, `raag_name`).
+-   **Select Name of the Taal:**
+    A dropdown list populated from a `taal_master` table (fields: `taal_id`, `taal_name`, `no_beats`).
+
+### Screen 2 - Notation Interface
+
+-   **Grid Setup:**
+
+    -   The number of columns is determined by the selected taal's number of beats.
+    -   Each cell in the grid represents one beat and can contain 1 to 4 swaras (notes).
+
+-   **Notation Input:**
+    -   Notes are input using specific characters representing different saptaks and types of notes.
+    -   **Madhya Saptak:** Normal octave notes are written without any symbol.
+    -   **Mandra Saptak:** Lower octave notes are written with a dot below the letter.
+    -   **Taar Saptak:** Higher octave notes are written with a dot above the letter.
+    -   **Komal (Flat) Notes:** Represented with a special sign (usually an underline or similar).
+    -   **Tivra (Sharp) Notes:** Typically represented with a different special sign.
+
+### Examples of Notation Signs
+
+-   **Madhya Saptak:** सा, रे, ग, म, प, ध, नी, सां
+-   **Mandra Saptak:** स़ा, रे़, ग़, म़, प़, ध़, नी़, सां़
+-   **Taar Saptak:** साँ, रेँ, गँ, माँ, पँ, धँ, नीँ, सांँ
+-   **Komal Notes in Taar Saptak:** नीँ
+-   **Komal Notes in Mandra Saptak:** नी़
