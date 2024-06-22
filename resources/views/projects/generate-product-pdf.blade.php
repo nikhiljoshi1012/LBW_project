@@ -6,11 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>{{ $title }}</title>
+
 </head>
 
 <body>
-    <code>hello</code>
+    <h1>{{ $title }}</h1>
+    <code>{{ $date }}</code>
+
+    <br>
     <table>
         <tbody>
             @if (is_array($output) || is_object($output))
@@ -22,7 +25,7 @@
                                     $decodedSubItem = json_encode($subItem);
                                 @endphp
                                 <td class="container" id="table-container" style="font-family: ome_bhatkhande_hindi">
-                                    <code>{{ $decodedSubItem }}</code>
+                                    <code style="font-family: ome_bhatkhande_hindi">{{ $decodedSubItem }}</code>
                                 </td>
                             @endforeach
                         </tr>

@@ -13,13 +13,13 @@ class PdfController extends Controller
         // Retrieve the specific data from the database
         $project = Project::findOrFail($id);
         Log::debug('Project retrieved', ['project' => $project]);
-
+        $name=$project->name;
         $data = $project->data;
         Log::debug('Data', ['data' => $data]);
 
         $pdfData = [
             'project' => $project,
-            'title' => 'Project Details',
+            'title' => $name,
             'date' => date('m/d/Y'),
             'output' => $data // Pass data to the view
         ];
