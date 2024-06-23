@@ -15,10 +15,42 @@ class ProjectController extends Controller
         $projects = Project::where('user_id', Auth::id())->get();
         return view('projects.index', compact('projects'));
     }
+    
+    public function newUntitled()
+    {
+        $user = Auth::user();
+        $projectNames = Project::where('user_id', $user->id)->pluck('name')->toArray();
+
+        $untitledCount = 1;
+        $newProjectName = 'Untitled';
+
+        while (in_array($newProjectName, $projectNames)) {
+            $newProjectName = 'Untitled ' . $untitledCount;
+            $untitledCount++;
+        }
+
+        return $newProjectName;
+    }
 
     public function create()
     {
-        return view('projects.create'); //TODO : Change the view name to a more systematic name
+        $projectNames = Project::where('user_id', Auth::id())->pluck('name');
+        $project = new Project();
+        $project->name = $this->newUntitled();
+        $data = [
+            "cells" => [],
+            "rowCount" => 14,
+            "columnCount" => 5
+        ];
+        $project->data = $data; // Store decoded data
+        
+        $project->user_id = Auth::id(); // Set the user ID for the project
+        $project->save();
+
+        $projectId = $project->id;
+        echo $projectId;
+        return redirect()->route('projects.show', ['project' => $project->id])->with('success', 'New project created successfully.');
+         //TODO : Change the view name to a more systematic name
     }
 
     public function store(Request $request)

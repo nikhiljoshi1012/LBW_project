@@ -8,12 +8,14 @@ document.addEventListener("DOMContentLoaded", function () {
         event.preventDefault(); // Prevent default form submission
         saveData(); // Call the saveData function
     });
+    createKeyboard();
+    //generateTable();
 });
 
 const selectedText = {
     text: "",
     start: 0,
-    end: 0,
+    end: 0, 
 };
 function selectedStringLength(str) {
     const regex = /[UuLl]/g;
@@ -266,6 +268,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function setActiveCell(cell) {
     activeCell = cell;
+    console.log(activeCell);
     document.getElementById("preview-inputbox").value = activeCell.value;
 }
 
