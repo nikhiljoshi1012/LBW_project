@@ -33,19 +33,24 @@ class PdfController extends Controller
         $w = $canvas->get_width();
         $h = $canvas->get_height();
         $font = $fontMetrics->getFont('times');
-        $text = "LBW";
+        $text = "Watermark";
         $txtHeight = $fontMetrics->getFontHeight($font, 70);
         $textWidth = $fontMetrics->getTextWidth($text, $font, 70);
         
         // Set text opacity
         $canvas->set_opacity(.2);
+
+            // Specify the position and rotation angle
+            $x = ($w - $textWidth) / 2;
+            $y = ($h - $txtHeight) / 2;
+            $angle = -45; // Rotate 45 degrees
         
         // Specify horizontal and vertical position
         $x = (($w - $textWidth) / 2);
         $y = (($h - $txtHeight) / 2);
         
         // Writes text at the specified x and y coordinates
-        $canvas->text($x, $y, $text, $font, 75);
+        $canvas->text($x, $y, $text, $font, 75,array(0, 0, 0), 0, 0, $angle);
         
         return $pdf->download('project-' . $project->id . '.pdf');
     }
