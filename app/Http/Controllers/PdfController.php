@@ -25,6 +25,28 @@ class PdfController extends Controller
         ];
 
         $pdf = Pdf::loadView('projects.generate-product-pdf', $pdfData);
+       
+
+        // Add the watermark
+        $canvas = $pdf->getCanvas();
+        $fontMetrics = new \Dompdf\FontMetrics($canvas, $pdf->getOptions());
+        $w = $canvas->get_width();
+        $h = $canvas->get_height();
+        $font = $fontMetrics->getFont('times');
+        $text = "LBW";
+        $txtHeight = $fontMetrics->getFontHeight($font, 70);
+        $textWidth = $fontMetrics->getTextWidth($text, $font, 70);
+        
+        // Set text opacity
+        $canvas->set_opacity(.2);
+        
+        // Specify horizontal and vertical position
+        $x = (($w - $textWidth) / 2);
+        $y = (($h - $txtHeight) / 2);
+        
+        // Writes text at the specified x and y coordinates
+        $canvas->text($x, $y, $text, $font, 75);
+        
         return $pdf->download('project-' . $project->id . '.pdf');
     }
 }
