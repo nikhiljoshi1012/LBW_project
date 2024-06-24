@@ -511,5 +511,3 @@ function saveData() {
     // Submit the form
     document.querySelector("form").submit();
 }
-
-

@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Hindi Music Notation Input</title>
-        <link rel="stylesheet" href="https://webfonts.omenad.net/fonts.css" />
-        <link rel="stylesheet" href="{{ asset('css/raag_taal.css') }}" />
-    </head>
-    <body>
-        
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hindi Music Notation Input</title>
+    <link rel="stylesheet" href="https://webfonts.omenad.net/fonts.css" />
+    <link rel="stylesheet" href="{{ asset('css/raag_taal.css') }}" />
+</head>
+
+<body>
+
     <div class="container">
         <form action="{{ route('projects.store') }}" method="POST">
             @csrf <!-- CSRF Token -->
@@ -35,22 +37,24 @@
             <input type="submit" id="save-button" value="Save">
         </form>
     </div>
-        <script src="{{ asset('js/raag_taal.js') }}"></script>
-        <div class="keyboard-container">
-            <div class="preview-input">
-                <code>
-                    <input type="text" id="preview-inputbox" id="preview-inputbox" value="" onmouseup="getSelectedText()"/>
-                </code>
-                <div class="keyboard">
-                    <div class="keylayout" id="keylayout">
-                        
-                            
-                        
-                    </div>
+    <script src="{{ asset('js/raag_taal.js') }}"></script>
+    <div class="keyboard-container">
+        <div class="preview-input">
+            <code>
+                <input type="text" id="preview-inputbox" id="preview-inputbox" value=""
+                    onmouseup="getSelectedText()" />
+            </code>
+            <div class="keyboard">
+                <div class="keylayout" id="keylayout">
+
+
+
                 </div>
-            
             </div>
-            
+
         </div>
-    </body>
+
+    </div>
+</body>
+
 </html>

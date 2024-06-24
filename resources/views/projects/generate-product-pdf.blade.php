@@ -23,10 +23,28 @@
             margin: 0;
             padding: 3px;
         }
+
+        #watermark {
+            position: fixed;
+
+            /**
+                    Set a position in the page for your image
+                    This should center it vertically
+                **/
+            bottom: 10cm;
+            left: 5.5cm;
+
+            /** Change image dimensions**/
+            width: 8cm;
+            height: 8cm;
+
+            /** Your watermark should be behind every content**/
+            z-index: -1000;
     </style>
 </head>
 
 <body>
+
     <h1 id="h1">{{ $title }}</h1>
     <br>
     <p>{{ $date }}</p>
@@ -71,5 +89,7 @@
         </tbody>
     </table>
 </body>
+
+<script></script>
 
 </html>
