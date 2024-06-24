@@ -44,50 +44,57 @@
 </head>
 
 <body>
+    <div id=watermark>
+        <img src="C:/xampp/htdocs/LBW_project-main/LBW_project/LBW_project/storage/watermaker.png" alt="watermark"
+            height="100%" width="100%">
+    </div>
+    <main>
+        <h1 id="h1">{{ $title }}</h1>
+        <br>
+        <p>{{ $date }}</p>
+        <br>
 
-    <h1 id="h1">{{ $title }}</h1>
-    <br>
-    <p>{{ $date }}</p>
-    <br>
-
-    <table>
-        <tbody>
-            @if (is_array($output) || is_object($output))
-                @foreach ($output as $item)
-                    @if (is_array($item) || is_object($item))
-                        <tr>
-                            @foreach ($item as $subItem)
-                                @php
-                                    $decodedSubItem = json_decode(json_encode($subItem), true);
-                                @endphp
-                                @if (!is_numeric($decodedSubItem))
-                                    <td class="container" id="table-container" style="font-family: ome_bhatkhande_hindi">
-                                        <code style="font-family: ome_bhatkhande_hindi">{{ $decodedSubItem }}</code>
-                                    </td>
-                                @endif
-                            @endforeach
-                        </tr>
-                    @else
-                        @if (!is_numeric($item))
+        <table>
+            <tbody>
+                @if (is_array($output) || is_object($output))
+                    @foreach ($output as $item)
+                        @if (is_array($item) || is_object($item))
                             <tr>
-                                <td class="container" id="table-container" style="font-family: ome_bhatkhande_hindi">
-                                    <code>{{ json_decode(json_encode($item), true) }}</code>
-                                </td>
+                                @foreach ($item as $subItem)
+                                    @php
+                                        $decodedSubItem = json_decode(json_encode($subItem), true);
+                                    @endphp
+                                    @if (!is_numeric($decodedSubItem))
+                                        <td class="container" id="table-container"
+                                            style="font-family: ome_bhatkhande_hindi">
+                                            <code style="font-family: ome_bhatkhande_hindi">{{ $decodedSubItem }}</code>
+                                        </td>
+                                    @endif
+                                @endforeach
                             </tr>
+                        @else
+                            @if (!is_numeric($item))
+                                <tr>
+                                    <td class="container" id="table-container"
+                                        style="font-family: ome_bhatkhande_hindi">
+                                        <code>{{ json_decode(json_encode($item), true) }}</code>
+                                    </td>
+                                </tr>
+                            @endif
                         @endif
+                    @endforeach
+                @else
+                    @if (!is_numeric($output))
+                        <tr>
+                            <td class="container" id="table-container" style="font-family: ome_bhatkhande_hindi">
+                                <code>{{ json_decode(json_encode($output), true) }}</code>
+                            </td>
+                        </tr>
                     @endif
-                @endforeach
-            @else
-                @if (!is_numeric($output))
-                    <tr>
-                        <td class="container" id="table-container" style="font-family: ome_bhatkhande_hindi">
-                            <code>{{ json_decode(json_encode($output), true) }}</code>
-                        </td>
-                    </tr>
                 @endif
-            @endif
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </main>
 </body>
 
 <script></script>
