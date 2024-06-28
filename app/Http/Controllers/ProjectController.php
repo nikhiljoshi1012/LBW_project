@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Support\Facades\Log;
+use App\Models\User;
 class ProjectController extends Controller
 {
     public function index()
@@ -76,4 +77,19 @@ class ProjectController extends Controller
         Log::info('Output: ' . print_r($output, true));
         return $pdf->download('project-' . $project->id . '.pdf');
     }
+
+    public function showWelcomePage()
+    {
+        // Assuming you're using Laravel's authentication
+        $user = auth()->user(); // Get the currently authenticated user
+        
+        if ($user) {
+            // Pass the user's name to the view
+            return view('index', ['name' => $user->name]);
+        } else {
+            // Handle the case where no user is authenticated
+            return view('index', ['name' => 'Guest']);
+        }
+    }
+    
 }

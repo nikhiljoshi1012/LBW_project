@@ -7,7 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PdfController; 
 
-
+Route::get('/', [ProjectController::class, 'showWelcomePage'])->name('welcome')->middleware('auth');
 Route::get('download-pdf/{id}', [App\Http\Controllers\PdfController::class, 'downloadPdf'])->name('download-pdf');
 Route::get('/', function () {
     return view('welcome');

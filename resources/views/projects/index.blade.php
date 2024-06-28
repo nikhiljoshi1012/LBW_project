@@ -13,14 +13,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Projects</h1>
+                    <h1>Welcome {{ $name ?? 'Guest' }}</h1>
+                    <h3>Projects</h3>
                     <a href="{{ route('projects.create') }}" class="btn btn-primary">Create New Project</a>
                     <div class="container -mt5">
                         <table class="table table-striped mt-3" id="myTable">
                     </div>
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>Srno</th>
                             <th>Name</th>
                             <th>Date Created</th>
                             <th>Actions</th>
