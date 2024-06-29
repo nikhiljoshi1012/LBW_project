@@ -89,12 +89,14 @@ table.composition tr.bold-bottom-border td {
 /* Highlighted Cell Styles */
 .highlighted {
     background-color: white;
-    box-shadow: 
+    /* box-shadow: 
         0 1px 2px rgba(0, 0, 0, 0.05), 
         0 2px 4px rgba(0, 0, 0, 0.07), 
         0 4px 8px rgba(0, 0, 0, 0.1),
         0 8px 16px rgba(0, 0, 0, 0.12),
-        0 16px 32px rgba(0, 0, 0, 0.15);
+        0 16px 32px rgba(0, 0, 0, 0.15); */
+    border: lightskyblue 2px solid;
+    border-radius: 10px;
 }
 
 /* Preview Input Box Styles */
@@ -169,12 +171,13 @@ table.composition tr.bold-bottom-border td {
 
 /* User Input Styles */
 .userInput {
-    width: 75vw;
-    margin: 5rem auto;
+    width: 100%;
+    /* margin: 5rem auto; */
     padding: 5rem;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1),
         0 16px 32px rgba(0, 0, 0, 0.1);
+        
 }
 
 .userInput .form-label {
@@ -182,7 +185,26 @@ table.composition tr.bold-bottom-border td {
     margin-bottom: 0.5rem;
 }
 
-.userInput .form-control,
+
 .userInput .form-select {
     margin-bottom: 1rem;
+}
+#update-button{
+    margin-left: auto;
+}
+
+#backButton svg{
+    width: auto;
+    height: 30px;
+}
+#load-table-button svg{
+    width: 15px;
+    height: 15px;
+}
+.profile{
+    margin-left: 20px;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+
 }
