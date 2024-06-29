@@ -22,6 +22,9 @@ document.addEventListener("DOMContentLoaded", function () {
         // Create header row
         const thead = document.createElement("thead");
         const headerRow = document.createElement("tr");
+        const th = document.createElement("th");
+        th.textContent = "#";
+        headerRow.appendChild(th);
         for (let i = 0; i < columnCount; i++) {
             const th = document.createElement("th");
             th.textContent = (i + 1).toString(); // Start numbering from 1
@@ -45,7 +48,13 @@ document.addEventListener("DOMContentLoaded", function () {
             for (let j = 0; j < columnCount; j++) {
                 const td = document.createElement("td");
                 const cellKey = `${i}-${j}`;
-                td.innerHTML = `<code><input type="text" style="min-width: 150px; border: none; outline: none; font-family: ome_bhatkhande_hindi;" data-cell="${cellKey}" maxlength="4" value="${
+                const fontFamily =
+                    i % 2 === 0
+                        ? "ome_bhatkhande_hindi"
+                        : "Noto Sans Devanagari";
+                const classItem =
+                    i % 2 === 0 ? "bhatkhande-hindi" : "devnagari";
+                td.innerHTML = `<code><input type="text" class="table-cell ${classItem}" style="min-width: 150px; border: none; outline: none; font-family: ${fontFamily};" data-cell="${cellKey}" maxlength="4" value="${
                     cells[cellKey] || ""
                 }" onfocus="setActiveCell(this)"></code>`;
 
@@ -54,9 +63,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
                 tr.appendChild(td);
             }
+            
 
             if (i % 2 === 1) {
                 tr.classList.add("bold-bottom-border");
+                
             }
             tbody.appendChild(tr);
         }
@@ -68,6 +79,20 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("update-button").style.display = "inline";
         document.getElementsByClassName("keyboard-container")[0].style.display =
             "flex";
+        // Add event listeners for the new inputs
+        const inputs = tbody.querySelectorAll("input");
+        inputs.forEach((input, index) => {
+            input.addEventListener("keydown", (event) =>
+                handleKeyDown(event, index, columnCount, inputs)
+            );
+
+            input.addEventListener("input", (event) =>
+                captureInput(event, inputs, columnCount)
+            );
+        });
+
+        // Update the display with the new row count
+        updateCellValuesDisplay();
     }
 
     function generateRowIdentifier(index) {
@@ -96,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
             cells: cells,
         };
     }
-
+//! Update function
     document
         .getElementById("update-button")
         .addEventListener("click", function (event) {
@@ -135,6 +160,45 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
         });
 
+        document
+        .getElementById("backButton")
+        .addEventListener("click", function (event) {
+            event.preventDefault();
+
+            const tableData = extractTableData();
+            const projectDataInput =
+                document.getElementById("project-data-input");
+            projectDataInput.value = JSON.stringify(tableData);
+
+            const projectName =
+                document.querySelector('input[name="name"]').value;
+            const url = `/projects/${projectId}`; // Update the URL if necessary
+
+            fetch(url, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": csrfToken,
+                },
+                body: JSON.stringify({
+                    name: projectName,
+                    project_data: projectDataInput.value,
+                }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.success) {
+                        window.location.href = `/dashboard`;
+                    } else {
+                        console.error("Update failed:", data);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        });
+
+
     // Function to add more rows
     // function addRows() {
     //     const tableBody = document.getElementById("table-body");
@@ -169,7 +233,48 @@ document.addEventListener("DOMContentLoaded", function () {
     // document
     //     .getElementById("add-rows-button")
     //     .addEventListener("click", addRows);
-    generateTableFromSavedData()
-});
+    generateTableFromSavedData();
+    const lastSavedData =  savedData;
+    function autoSave() {
+        
+        const tableData = extractTableData();
+        
+        if (tableData === lastSavedData) {
+            console.log("No changes to save");
+            return;
+        }
+        
+        const projectDataInput =
+            document.getElementById("project-data-input");
+        projectDataInput.value = JSON.stringify(tableData);
 
- 
+        const projectName =
+            document.querySelector('input[name="name"]').value;
+         // Update the URL if necessary
+
+        fetch(url, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": csrfToken,
+            },
+            body: JSON.stringify({
+                name: projectName,
+                project_data: projectDataInput.value,
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    console.log("Update successful:", data);
+                    //window.location.href = `/projects/${projectId}`;
+                } else {
+                    console.error("Update failed:", data);
+                }
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    }
+    setInterval(autoSave, 300000);
+});

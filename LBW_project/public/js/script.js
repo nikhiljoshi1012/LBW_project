@@ -267,8 +267,12 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function setActiveCell(cell) {
+    if (activeCell) {
+    (activeCell.parentElement).classList.remove("highlighted");
+    }   
     activeCell = cell;
-    console.log(activeCell);
+    (activeCell.parentElement).classList.add("highlighted");
+    
     document.getElementById("preview-inputbox").value = activeCell.value;
 }
 
