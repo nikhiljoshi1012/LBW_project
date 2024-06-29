@@ -7,7 +7,13 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PdfController; 
 
+
+
 Route::get('/profile/index', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile.index');
+Route::post('updatepic', [App\Http\Controllers\ProfileController::class, 'updatepic'])->name('updatepic');
+Route::post('updateinfo', [App\Http\Controllers\ProfileController::class, 'updateinfo'])->name('updateinfo');
+
+
 Route::get('/', [ProjectController::class, 'showWelcomePage'])->name('welcome')->middleware('auth');
 Route::get('download-pdf/{id}', [App\Http\Controllers\PdfController::class, 'downloadPdf'])->name('download-pdf');
 Route::get('/', function () {
