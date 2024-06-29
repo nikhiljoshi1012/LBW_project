@@ -124,15 +124,6 @@ return [
     ],
 
 
-    'providers'=>[
-        Illuminate\Filesystem\FilesystemServiceProvider::class,
-        RealRashid\SweetAlert\SweetAlertServiceProvider::class,
 
-    ],
-
-    'aliases' => [
-
-    'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
-],
 
 ];

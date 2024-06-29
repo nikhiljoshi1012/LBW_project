@@ -75,6 +75,7 @@ class RegisterController extends Controller
         $createprofile = new Profile();
         $createprofile->user_id = $getuserid;
         $createprofile->save();
+    
         Alert::success('Success','User registered successfully');
         return $user;
     }
