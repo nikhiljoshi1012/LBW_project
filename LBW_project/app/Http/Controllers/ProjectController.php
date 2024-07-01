@@ -75,6 +75,7 @@ class ProjectController extends Controller
 
     public function show($id)
     {
+        $Allprojects = Project::where('user_id', Auth::id())->get();
         $project = Project::findOrFail($id);
 
         // Retrieve the timezone from the config
@@ -89,7 +90,7 @@ class ProjectController extends Controller
         $updatedAt->setTimezone(new \DateTimeZone($timezone));
         $project->updated_at = $updatedAt->format('Y-m-d H:i:s');
 
-        return view('projects.show', compact('project'));
+        return view('projects.show', compact('project', 'Allprojects'));
     }
 
     public function update(Request $request, $id)
