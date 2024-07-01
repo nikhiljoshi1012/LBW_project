@@ -9,6 +9,7 @@ use Illuminate\Validation\ValidationException;
 use Intervention\Image\ImageManagerStatic as Image;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
+use RealRashid\SweetAlert\Facades\Alert;
 
 
 
@@ -19,7 +20,6 @@ class ProfileController extends Controller
         $profile->user_id = $userId;
         $profile->save();
     }
-    
     public function index()
     {
         $current_userid = Auth()->user()->id;
@@ -28,7 +28,6 @@ class ProfileController extends Controller
 
         return view('profile.index',compact('userprofile','userinfo'));
     }
-
 
     
     public function updatepic(Request $request)
@@ -54,7 +53,8 @@ class ProfileController extends Controller
             $user->picture = $uploadedfile;
             $user->save();
         }
-    
+        Alert::success('Success!', 'Profile picture updated successfully!');
+
         return redirect()->route('profile.index');
     }
 

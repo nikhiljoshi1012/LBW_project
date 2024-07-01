@@ -6,11 +6,11 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PdfController; 
+use App\Http\Controllers\ProfileController;
 
-
-Route::get('/profile/index', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile.index');
-Route::post('updatepic', [App\Http\Controllers\ProfileController::class, 'updatepic'])->name('updatepic');
-Route::post('updateinfo', [App\Http\Controllers\ProfileController::class, 'updateinfo'])->name('updateinfo');
+Route::get('/profile/index', [ProfileController::class, 'index'])->name('profile.index');
+Route::post('updatepic', [ProfileController::class, 'updatepic'])->name('updatepic');
+Route::post('updateinfo', [ProfileController::class, 'updateinfo'])->name('updateinfo');
 
 
 Route::get('/', [ProjectController::class, 'showWelcomePage'])->name('welcome')->middleware('auth');
