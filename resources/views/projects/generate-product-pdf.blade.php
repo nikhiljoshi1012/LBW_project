@@ -30,54 +30,37 @@
     <br>
     <p>Date: {{ $date }}</p>
     <br>
-
     <table>
         <thead>
             <tr>
                 <th>#</th>
-                @if (isset($output[0]) && (is_array($output[0]) || is_object($output[0])))
-                    @php
-                        $columns = is_array($output[0]) ? count($output[0]) : count((array) $output[0]);
-                    @endphp
-                    @for ($i = 1; $i <= $columns; $i++)
-                        <th>{{ $i }}</th>
-                    @endfor
-                @endif
+                @php
+                    $maxRows = count($output);
+                    for ($i = 1; $i <= $maxRows; $i++) {
+                        echo '<th>' . chr(64 + $i) . '</th>'; // A, B, C, ...
+                    }
+                @endphp
             </tr>
         </thead>
         <tbody>
-            @php $rowNum = 1; @endphp <!-- Initialize row counter -->
-            @if (is_array($output) || is_object($output))
-                @foreach ($output as $index => $item)
-                    <tr>
-                        <td>{{ chr(64 + $rowNum) }}</td> <!-- Display row letter (A, B, C, ...) -->
-                        @if (is_array($item) || is_object($item))
-                            @php $colNum = 1; @endphp <!-- Initialize column counter -->
-                            @foreach ($item as $subItem)
-                                @php
-                                    $decodedSubItem = json_decode(json_encode($subItem), true);
-                                @endphp
-                                <td class="container" id="table-container" style="font-family: ome_bhatkhande_hindi">
-                                    <code style="font-family: ome_bhatkhande_hindi">{{ $decodedSubItem }}</code>
-                                </td>
-                                @php $colNum++; @endphp <!-- Increment column counter -->
-                            @endforeach
-                        @else
-                            <td class="container" id="table-container" style="font-family: ome_bhatkhande_hindi">
-                                <code>{{ json_decode(json_encode($item), true) }}</code>
-                            </td>
-                        @endif
-                    </tr>
-                    @php $rowNum++; @endphp <!-- Increment row counter -->
-                @endforeach
-            @else
+            @php
+                $maxColumns = 0;
+                foreach ($output as $item) {
+                    $maxColumns = max($maxColumns, is_countable($item) ? count($item) : 1);
+                }
+            @endphp
+            @for ($i = 0; $i < $maxColumns; $i++)
                 <tr>
-                    <td>{{ chr(64 + $rowNum) }}</td> <!-- Display row letter (A, B, C, ...) -->
-                    <td class="container" id="table-container" style="font-family: ome_bhatkhande_hindi">
-                        <code>{{ json_decode(json_encode($output), true) }}</code>
-                    </td>
+                    <td>{{ $i + 1 }}</td>
+                    @foreach ($output as $item)
+                        @php
+                            $item = (array) $item; // Ensure $item is an array
+                            $value = $item[$i] ?? ''; // Use null coalescing operator to handle undefined offsets
+                        @endphp
+                        <td>{{ $value }}</td>
+                    @endforeach
                 </tr>
-            @endif
+            @endfor
         </tbody>
     </table>
 </body>
