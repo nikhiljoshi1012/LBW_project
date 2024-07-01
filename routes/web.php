@@ -13,7 +13,10 @@ Route::post('updatepic', [ProfileController::class, 'updatepic'])->name('updatep
 Route::post('updateinfo', [ProfileController::class, 'updateinfo'])->name('updateinfo');
 
 
-Route::get('/', [ProjectController::class, 'showWelcomePage'])->name('welcome')->middleware('auth');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
 Route::get('download-pdf/{id}', [App\Http\Controllers\PdfController::class, 'downloadPdf'])->name('download-pdf');
 Route::get('/', function () {
     return view('welcome');

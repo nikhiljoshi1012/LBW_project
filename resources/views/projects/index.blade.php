@@ -13,8 +13,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Welcome {{ $name ?? 'Guest' }}</h1>
+                    <h1>Welcome {{ Auth::user()->name }}</h1>
                     <h3>Projects</h3>
+
                     <a href="{{ route('projects.create') }}" class="btn btn-primary">Create New Project</a>
                     <div class="container -mt5">
                         <table class="table table-striped mt-3" id="myTable">
