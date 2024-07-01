@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\Profile;
-
+use Illuminate\Http\Request;
 class RegisterController extends Controller
 {
     /*
@@ -64,21 +64,26 @@ class RegisterController extends Controller
      * @return \App\Models\User
      */
     protected function create(array $data)
-    {
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
-    
-        $getuserid = $user->id;
-        $createprofile = new Profile();
-        $createprofile->user_id = $getuserid;
-        $createprofile->save();
-    
-        Alert::success('Success','User registered successfully');
-        return $user;
-    }
+{
+    $user = User::create([
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'password' => Hash::make($data['password']),
+    ]);
+
+    $getuserid = $user->id;
+    $createprofile = new Profile();
+    $createprofile->user_id = $getuserid;
+    $createprofile->save();
+
+    return $user;
+}
+
+protected function registered(Request $request, $user)
+{
+    Alert::success('Success!', 'Your account has been created.');
+    return redirect($this->redirectPath());
+}
 
 
 }

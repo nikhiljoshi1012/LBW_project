@@ -20,18 +20,14 @@ class ProfileController extends Controller
         $profile->save();
     }
     
-    public function index() {
-    $current_userid = Auth()->user()->id;
-    $userinfo = User::where('id', '=', $current_userid)->first();
-    $userprofile = Profile::where('user_id', '=', $current_userid)->first();
+    public function index()
+    {
+        $current_userid = Auth()->user()->id;
+        $userinfo = User::where('id','=',$current_userid)->first();
+        $userprofile = Profile::where('user_id','=',$current_userid)->first();
 
-    if (!$userprofile) {
-        $this->createProfileForUser($current_userid);
-        $userprofile = Profile::where('user_id', '=', $current_userid)->first();
+        return view('profile.index',compact('userprofile','userinfo'));
     }
-
-    return view('profile.index', compact('userprofile', 'userinfo'));
-}
 
 
     

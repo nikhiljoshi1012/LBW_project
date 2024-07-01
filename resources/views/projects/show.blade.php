@@ -7,6 +7,7 @@
     <title>Display Saved Data</title>
     <link rel="stylesheet" href="https://webfonts.omenad.net/fonts.css" />
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -16,7 +17,8 @@
     <div id="json-string-container"></div>
     <button id="load-table-button">Load Table</button>
     <div class="container" id="table-container"></div>
-    <a href="{{ route('download-pdf', ['id' => $id]) }}">Download PDF</a>
+    <a href="javascript:void(0);" id="download-pdf">Download PDF</a>
+    <iframe id="pdf-download-frame" style="display: none;"></iframe> <!-- Hidden iframe for PDF download -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const jsonString = @json($project->data);
@@ -63,8 +65,8 @@
                         const td = document.createElement("td");
                         const cellKey = `${i}-${j}`;
                         td.innerHTML = `<code><input type="text" style="min-width: 150px; border: none; outline: none; font-family: ome_bhatkhande_hindi;" data-cell="${cellKey}" maxlength="4" value="${
-        cells[cellKey] || ""
-      }" readonly></code>`;
+                            cells[cellKey] || ""
+                        }" readonly></code>`;
 
                         if ((j + 1) % 4 === 0) {
                             td.classList.add("bold-right-border");
@@ -81,6 +83,17 @@
                 table.appendChild(tbody);
                 tableContainer.appendChild(table);
             }
+
+            document.getElementById("download-pdf").addEventListener("click", function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'PDF Downloaded Successfully',
+                    showConfirmButton: true,
+                }).then(() => {
+                    document.getElementById('pdf-download-frame').src =
+                        "{{ route('download-pdf', ['id' => $project->id]) }}";
+                });
+            });
         });
     </script>
 </body>

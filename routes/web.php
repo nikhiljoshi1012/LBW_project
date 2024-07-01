@@ -8,7 +8,6 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PdfController; 
 
 
-
 Route::get('/profile/index', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile.index');
 Route::post('updatepic', [App\Http\Controllers\ProfileController::class, 'updatepic'])->name('updatepic');
 Route::post('updateinfo', [App\Http\Controllers\ProfileController::class, 'updateinfo'])->name('updateinfo');
