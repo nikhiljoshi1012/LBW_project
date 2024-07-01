@@ -254,10 +254,28 @@ function createKeyboard() {
         }
         keyboardContainer.appendChild(button);
     }
+    document.getElementById("enter-key").classList.add("btn", "btn-primary");
+    document.getElementById("shift-key").classList.add("btn", "btn-primary");
+    if(shiftKey === 1){
+        document.getElementById("shift-key").classList.add("active");
+    }
+    document.getElementById("showSwarKeyboard").checked = true;
+}
+
+function toggleKeyboard() {
+    const showSwarKeyboard = document.getElementById("showSwarKeyboard");
+    const keyboardContainer = document.getElementById("keyboard-container");
+    if (!showSwarKeyboard.checked) {
+        keyboardContainer.style.display="none";
+    } else{
+        keyboardContainer.style.display="flex";
+    }
+    console.log(showSwarKeyboard.checked);
 }
 
 function toggleShiftKey() {
     shiftKey = (shiftKey + 1) % 2;
+    
     createKeyboard();
 }
 
@@ -268,10 +286,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function setActiveCell(cell) {
     if (activeCell) {
-    (activeCell.parentElement).classList.remove("highlighted");
+    (activeCell.parentElement).parentElement.classList.remove("highlighted");
     }   
     activeCell = cell;
-    (activeCell.parentElement).classList.add("highlighted");
+    (activeCell.parentElement).parentElement.classList.add("highlighted");
     
     document.getElementById("preview-inputbox").value = activeCell.value;
 }
@@ -424,17 +442,23 @@ function addRows() {
                 existingRowCount + i
             }-${j}" onfocus="setActiveCell(this)"></code>`;
 
-            if ((j + 1) % 4 === 0) {
-                td.classList.add("bold-right-border");
-            }
+            // if ((j + 1) % 4 === 0) {
+            //     td.classList.add("bold-right-border");
+            // }
             tr.appendChild(td);
+        }
+        if ((existingRowCount + i) % 2 === 0) {
+            tr.classList.add("bold-top-border");
+
         }
 
         if ((existingRowCount + i) % 2 === 1) {
             tr.classList.add("bold-bottom-border");
+
         }
         tbody.appendChild(tr);
     }
+    tbody.appendChild(document.createElement("br"))
 
     // Add event listeners for the new inputs
     const inputs = tbody.querySelectorAll("input");

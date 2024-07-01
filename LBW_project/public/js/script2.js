@@ -12,9 +12,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function generateTableFromSavedData() {
         const { rowCount, columnCount, cells } = savedData;
-        const tableContainer = document.getElementById("table-container");
+        const spreadSheetContainer= document.getElementById("table-container");
+        spreadSheetContainer.style.display = "block";
+        const tableContainer = document.createElement("div");
         tableContainer.style.display = "block";
         tableContainer.innerHTML = ""; // Clear previous table
+        tableContainer.className ="table-sheet";
 
         const table = document.createElement("table");
         table.className = "table composition bhatkhande-hindi";
@@ -22,6 +25,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // Create header row
         const thead = document.createElement("thead");
         const headerRow = document.createElement("tr");
+        headerRow.classList.add("header-row");
+        headerRow.classList.add("bold-bottom-border")
         const th = document.createElement("th");
         th.textContent = "#";
         headerRow.appendChild(th);
@@ -58,9 +63,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     cells[cellKey] || ""
                 }" onfocus="setActiveCell(this)"></code>`;
 
-                if ((j + 1) % 4 === 0) {
-                    td.classList.add("bold-right-border");
-                }
+                // if ((j + 1) % 4 === 0) {
+                //     td.classList.add("bold-right-border");
+                // }
                 tr.appendChild(td);
             }
             
@@ -68,14 +73,24 @@ document.addEventListener("DOMContentLoaded", function () {
             if (i % 2 === 1) {
                 tr.classList.add("bold-bottom-border");
                 
+                
+                
+            }
+
+            if(i%2===0 && i!==0){
+                tbody.appendChild(document.createElement("br"))
+                tr.classList.add("bold-top-border")
+                
             }
             tbody.appendChild(tr);
+
         }
+        tbody.appendChild(document.createElement("br"))
 
         table.appendChild(tbody);
         tableContainer.appendChild(table);
 
-        document.getElementById("add-rows-button").style.display = "inline";
+        
         document.getElementById("update-button").style.display = "inline";
         document.getElementsByClassName("keyboard-container")[0].style.display =
             "flex";
@@ -93,6 +108,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Update the display with the new row count
         updateCellValuesDisplay();
+        spreadSheetContainer.appendChild(tableContainer);
+        
+        const rowButton = document.createElement('div');
+        rowButton.className="d-flex justify-content-center mt-3";
+        spreadSheetContainer.appendChild(rowButton);
+        rowButton.innerHTML='<button id="add-rows-button" class="btn btn-secondary btn-block mb-3" onclick="addRows()" type="button">Add More Rows</button>'        
+        document.getElementById("add-rows-button").style.display = "inline";
     }
 
     function generateRowIdentifier(index) {
