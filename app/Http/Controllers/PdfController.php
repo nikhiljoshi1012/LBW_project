@@ -21,7 +21,8 @@ class PdfController extends Controller
             'project' => $project,
             'title' => $name,
             'date' => date('m/d/Y'),
-            'output' => $data // Pass data to the view
+            // 'output' => $data ,// Pass data to the view
+            'cellValues'=>$data
         ];
 
         $pdf = Pdf::loadView('projects.generate-product-pdf', $pdfData);

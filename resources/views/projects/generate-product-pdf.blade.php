@@ -30,39 +30,47 @@
     <br>
     <p>Date: {{ $date }}</p>
     <br>
-    <table>
+    <table style="width: 100%; border-collapse: collapse;">
         <thead>
             <tr>
-                <th>#</th>
-                @php
-                    $maxRows = count($output);
-                    for ($i = 1; $i <= $maxRows; $i++) {
-                        echo '<th>' . chr(64 + $i) . '</th>'; // A, B, C, ...
-                    }
-                @endphp
+                <th style="border: 1px solid black;">#</th>
+                @for ($col = 1; $col <= $cellValues['columnCount']; $col++)
+                    <th style="border: 1px solid black;">{{ $col }}</th>
+                @endfor
             </tr>
         </thead>
         <tbody>
-            @php
-                $maxColumns = 0;
-                foreach ($output as $item) {
-                    $maxColumns = max($maxColumns, is_countable($item) ? count($item) : 1);
-                }
-            @endphp
-            @for ($i = 0; $i < $maxColumns; $i++)
+            @for ($row = 0; $row < $cellValues['rowCount']; $row++)
                 <tr>
-                    <td>{{ $i + 1 }}</td>
-                    @foreach ($output as $item)
-                        @php
-                            $item = (array) $item; // Ensure $item is an array
-                            $value = $item[$i] ?? ''; // Use null coalescing operator to handle undefined offsets
-                        @endphp
-                        <td>{{ $value }}</td>
-                    @endforeach
+                    <th style="border: 1px solid black;">{{ generateRowIdentifier($row) }}</th>
+                    @for ($col = 0; $col < $cellValues['columnCount']; $col++)
+                        <td
+                            style="border: 1px solid black; height: 30px; 
+                            @if (($col + 1) % 4 === 0) border-right: 2px solid black; @endif
+                            @if ($row % 2 === 1) border-bottom: 2px solid black; @endif">
+                            @if (isset($cellValues['cells']["$row-$col"]))
+                                <code style="font-family: ome_bhatkhande_hindi;">
+                                    {{ $cellValues['cells']["$row-$col"] }}
+                                </code>
+                            @endif
+                        </td>
+                    @endfor
                 </tr>
             @endfor
         </tbody>
     </table>
+
+    @php
+        function generateRowIdentifier($index)
+        {
+            $identifier = '';
+            do {
+                $identifier = chr(($index % 26) + 65) . $identifier;
+                $index = floor($index / 26) - 1;
+            } while ($index >= 0);
+            return $identifier;
+        }
+    @endphp
 </body>
 
 </html>
