@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     /*
@@ -39,10 +41,30 @@ class LoginController extends Controller
         $this->middleware('auth')->only('logout');
     }
 
-    protected function authenticated(Request $request, $user)
-    {
-        Alert::success('Welcome!', 'You are logged in.');
-        return redirect()->intended($this->redirectPath());
+    public function login(Request $request)
+{
+    $this->validateLogin($request);
+
+    if ($this->attemptLogin($request)) {
+        notify()->success('Welcome back, ' . Auth::user()->name . '!', 'Login Successful');
+
+        return $this->sendLoginResponse($request);
     }
+
+    $this->incrementLoginAttempts($request);
+
+    return $this->sendFailedLoginResponse($request);
+}
+
+protected function sendFailedLoginResponse(Request $request)
+{
+    notify()->error('Login failed, please check your credentials and try again.', 'Login Failed');
+
+    return redirect()->back()
+        ->withInput($request->only($this->username(), 'remember'))
+        ->withErrors([
+            $this->username() => [trans('auth.failed')],
+        ]);
+}
 
 }

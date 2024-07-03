@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\Profile;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException; 
+use Illuminate\Support\Facades\Auth;
 class RegisterController extends Controller
 {
     /*
@@ -80,9 +82,9 @@ class RegisterController extends Controller
 
 protected function registered(Request $request, $user)
 {
-    Alert::success('Success!', 'Your account has been created.');
+    notify()->success('Welcome, ' . Auth::user()->name . '!', 'Registration Successful');
+
     return redirect($this->redirectPath());
 }
-
 
 }

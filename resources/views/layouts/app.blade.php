@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{ asset('build/assets/css/fonts.css') }}">
     <link rel="stylesheet" href="{{ asset('build/assets/css/custom.css') }}">
 
+    @notifyCss
 
 
     <!-- Scripts -->
@@ -22,7 +23,10 @@
 </head>
 
 <body>
+
+
     @include('sweetalert::alert')
+
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -81,11 +85,13 @@
                 </div>
             </div>
         </nav>
-
+        <x-notify::notify />
+        @notifyJs
         <main class="py-4">
             @yield('content')
         </main>
     </div>
+
 </body>
 
 </html>

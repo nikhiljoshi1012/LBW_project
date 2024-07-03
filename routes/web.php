@@ -8,6 +8,10 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PdfController; 
 use App\Http\Controllers\ProfileController;
 
+
+
+
+
 Route::get('/profile/index', [ProfileController::class, 'index'])->name('profile.index');
 Route::post('updatepic', [ProfileController::class, 'updatepic'])->name('updatepic');
 Route::post('updateinfo', [ProfileController::class, 'updateinfo'])->name('updateinfo');
@@ -18,9 +22,12 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::get('download-pdf/{id}', [App\Http\Controllers\PdfController::class, 'downloadPdf'])->name('download-pdf');
+
 Route::get('/', function () {
+    notify()->success('Welcome to Raaga Taal', 'Welcome');  
     return view('welcome');
 });
+
 Route::get('/raaga_taal', function () {
     return view('raaga_taal');
 });
