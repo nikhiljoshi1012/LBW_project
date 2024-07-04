@@ -17,6 +17,14 @@ Route::post('updatepic', [ProfileController::class, 'updatepic'])->name('updatep
 Route::post('updateinfo', [ProfileController::class, 'updateinfo'])->name('updateinfo');
 
 
+
+
+Route::get('/landing', function () {
+    return view('land');
+});
+
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
