@@ -25,25 +25,49 @@
 }
 .file-item-header{
     display: grid;
-    grid-template-columns: 0.25fr 1fr 1fr 0.25fr;
+    grid-template-columns: 0.25fr 2fr 2fr 0.25fr;
     gap: 10px;
     align-items: center;
     padding: 10px;
     border-bottom: black 1px solid;
     background-color: white;
+    z-index: 2;
 
+}
+.file-item-header.is-sticky{
+    transform: translateY(-10px);
+}
+.dropdown-item{
+    cursor: pointer;
 }
 .file-item{
     display: grid;
-    grid-template-columns: 0.25fr 1fr 1fr 0.25fr;
+    grid-template-columns: 0.25fr 3fr 2fr 0.25fr;
     gap: 10px;
     align-items: center;
     padding: 10px;
     border-bottom: black 1px solid;
     background-color: white;
+    width: auto;
 
 }
+.filemenu-dropdown{
+    background-color: white;
+    transition: background-color 0.5s;
 
+}
+.filemenu-dropdown:hover {
+    background-color: rgb(231, 230, 230);
+    transition: background-color 0.5s;
+}
+.filemenu-dropdown:active{
+    background-color: rgb(186, 185, 185);
+    transition: background-color 0.5s;
+}
+
+.filemenu-dropdown::after{
+    display: none;
+}
 /* Table Container Styles */
 #table-container {
     /* width: 75vw; Set to 75% of the viewport width */

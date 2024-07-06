@@ -438,6 +438,16 @@ function addRows() {
 
         for (let j = 0; j < columnCount; j++) {
             const td = document.createElement("td");
+            const fontFamily =
+                    i % 2 === 0
+                        ? "ome_bhatkhande_hindi"
+                        : "Noto Sans Devanagari";
+                const classItem =
+                    i % 2 === 0 ? "bhatkhande-hindi" : "devnagari";
+                td.innerHTML = `<code><input type="text" class="table-cell ${classItem}" style="min-width: 150px; border: none; outline: none; font-family: ${fontFamily};" data-cell="${
+                    existingRowCount + i
+                }-${j}" maxlength="4"  onfocus="setActiveCell(this)"></code>`;
+
             td.innerHTML = `<code><input type="text" style="min-width: 150px; border: none; outline: none; font-family: ome_bhatkhande_hindi;" data-cell="${
                 existingRowCount + i
             }-${j}" onfocus="setActiveCell(this)"></code>`;
@@ -476,6 +486,86 @@ function addRows() {
     // Update the display with the new row count
     updateCellValuesDisplay();
 }
+
+
+
+function addColumn(cells) {
+    // Determine the current number of rows and columns
+    const rows = Object.keys(cells).reduce((max, key) => Math.max(max, parseInt(key.split('-')[0])), 0) + 1;
+    const columns = Object.keys(cells).reduce((max, key) => Math.max(max, parseInt(key.split('-')[1])), 0) + 1;
+
+    const currentData = extractTableData();
+    const columnCount = currentData.columnCount + 1;
+    const rowCount = currentData.rowCount;
+    var cells = currentData.cells;
+
+    // Create a new object to store the updated cells
+    const updatedCells = {};
+
+    // Copy the original cells to the new object
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < columns; j++) {
+            const key = `${i}-${j}`;
+            updatedCells[key] = cells[key];
+        }
+        // Add the new column for the current row
+        const newKey = `${i}-${columns}`;
+        updatedCells[newKey] = "";
+    }
+
+    savedData
+}
+
+function resizeTable() {
+    const savedData = projectData;
+    const resizeRow = document.getElementById("resizeRow");
+    const resizeCol = document.getElementById("resizeCol");
+    const additionalRows = parseInt(resizeRow.value, savedData.rowCount) - savedData.rowCount/2;
+    const additionalColumns = parseInt(resizeCol.value, savedData.columnCount) - savedData.columnCount;
+    if (additionalRows < 0 || additionalColumns < 0) {
+        resizeRow.classList.add("is-invalid");
+        resizeCol.classList.add("is-invalid");
+        console.log(additionalRows, additionalColumns, savedData.rowCount, savedData.columnCount);
+        return;
+    }
+    else{
+        resizeRow.classList.remove("is-invalid");
+        resizeCol.classList.remove("is-invalid");
+    }
+
+
+    const addButton = document.getElementById("resize-button");
+
+    if (addButton.disabled) return;
+
+    addButton.disabled = true;
+    setTimeout(() => addButton.disabled = false, 5000);
+
+    const tbody = document.getElementById("table-body");
+    const existingRowCount = tbody.rows.length;
+    const existingColumnCount = tbody.rows[0] ? tbody.rows[0].cells.length : 0;
+
+    // Add Rows
+    for (let i = 0; i < additionalRows; i++) {
+        addRows();
+    }
+
+    // Add Columns to existing rows if additionalColumns > 0
+    if (additionalColumns > 0) {
+        for (let i = 0; i < existingRowCount*2; i++) {
+            const tr = tbody.rows[i];
+            for (let j = 0; j < additionalColumns; j++) {
+                const td = document.createElement("td");
+                td.innerHTML = `<input type="text" data-cell="${i}-${existingColumnCount + j}">`;
+                tr.appendChild(td);
+            }
+        }
+    }
+
+    // Update the display with the new row and column count
+    updateCellValuesDisplay();
+}
+
 
 function handleKeyDown(event, index, columnCount, inputs) {
     let newIndex;
