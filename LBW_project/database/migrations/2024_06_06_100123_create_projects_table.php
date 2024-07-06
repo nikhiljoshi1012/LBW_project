@@ -19,6 +19,7 @@ class CreateProjectsTable extends Migration
             $table->json('data')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
+            $table->string('visibility')->default('private');
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
