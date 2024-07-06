@@ -1,0 +1,6 @@
+let table = {
+     
+    init: function() {
+        
+    }
+};
