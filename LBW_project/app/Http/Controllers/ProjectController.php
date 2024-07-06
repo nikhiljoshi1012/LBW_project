@@ -6,6 +6,9 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Gate;
+
 
 class ProjectController extends Controller
 {
@@ -15,7 +18,7 @@ class ProjectController extends Controller
         $projects = Project::where('user_id', Auth::id())->get();
         return view('projects.index', compact('projects'));
     }
-    
+
     public function newUntitled()
     {
         $user = Auth::user();
@@ -25,11 +28,47 @@ class ProjectController extends Controller
         $newProjectName = 'Untitled';
 
         while (in_array($newProjectName, $projectNames)) {
-            $newProjectName = 'Untitled ' . $untitledCount;
+            $newProjectName = 'Untitled ' . '(' . $untitledCount . ')';
             $untitledCount++;
         }
 
         return $newProjectName;
+    }
+    public function newCopy($pname)
+    {
+        $user = Auth::user();
+        $projectNames = Project::where('user_id', $user->id)->pluck('name')->toArray();
+
+        $pnameCount = 1;
+        $newProjectName = $pname . ' (Copy)';
+
+        while (in_array($newProjectName, $projectNames)) {
+            $newProjectName = $pname . ' (Copy)' . '(' . $pnameCount . ')';
+            $pnameCount++;
+        }
+
+        return $newProjectName;
+    }
+
+    public function copyProject($id)
+    {
+        $project = Project::findOrFail($id);
+        
+        if($project->visibility == 'private' && $project->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+            return; 
+        }
+
+        $projectNames = Project::where('user_id', Auth::id())->pluck('name');
+        $newProjectName = $this->newCopy($project->name);
+
+        $newProject = new Project();
+        $newProject->name = $newProjectName;
+        $newProject->data = $project->data;
+        $newProject->user_id = Auth::id();
+        $newProject->save();
+
+        return response()->json(['redirect' => route('projects.show', ['project' => $newProject->id])]);
     }
 
     public function create()
@@ -43,14 +82,14 @@ class ProjectController extends Controller
             "columnCount" => 5
         ];
         $project->data = $data; // Store decoded data
-        
+
         $project->user_id = Auth::id(); // Set the user ID for the project
         $project->save();
 
         $projectId = $project->id;
         echo $projectId;
         return redirect()->route('projects.show', ['project' => $project->id])->with('success', 'New project created successfully.');
-         //TODO : Change the view name to a more systematic name
+        //TODO : Change the view name to a more systematic name
     }
 
     public function store(Request $request)
@@ -77,7 +116,12 @@ class ProjectController extends Controller
     {
         $Allprojects = Project::where('user_id', Auth::id())->get();
         $project = Project::findOrFail($id);
+        
 
+        if($project->visibility == 'private' && $project->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+            return; 
+        }
         // Retrieve the timezone from the config
         $timezone = config('app.timezone', 'Asia/Kolkata');
 
@@ -101,10 +145,14 @@ class ProjectController extends Controller
             'project_data' => 'required|string', // Assuming project_data is still a JSON string
         ]);
 
+
         $project = Project::findOrFail($id);
+        
+        
 
         // Ensure the authenticated user is the owner of the project
         if ($project->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
             return redirect()->route('dashboard')->with('error', 'Unauthorized action.');
         }
 
@@ -123,8 +171,10 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($id);
 
+        
         // Ensure the authenticated user is the owner of the project
         if ($project->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
             return redirect()->route('dashboard')->with('error', 'Unauthorized action.');
         }
 
@@ -132,7 +182,4 @@ class ProjectController extends Controller
 
         return redirect()->route('dashboard')->with('success', 'Project deleted successfully.');
     }
-
-
-
 }
