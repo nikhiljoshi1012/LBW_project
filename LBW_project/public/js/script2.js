@@ -1,6 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const savedData = projectData;
+    var savedData = projectData;
     console.log("Saved Data:", savedData);
+
+    document.getElementById("resizeRow").value = savedData.rowCount/2;
+    document.getElementById("resizeCol").value = savedData.columnCount;
 
     document.getElementById(
         "json-string-container"
@@ -143,9 +146,50 @@ document.addEventListener("DOMContentLoaded", function () {
             cells: cells,
         };
     }
+
+
+    
 //! Update function
     document
         .getElementById("update-button")
+        .addEventListener("click", function (event) {
+            event.preventDefault();
+
+            const tableData = extractTableData();
+            const projectDataInput =
+                document.getElementById("project-data-input");
+            projectDataInput.value = JSON.stringify(tableData);
+
+            const projectName =
+                document.querySelector('input[name="name"]').value;
+            const url = `/projects/${projectId}`; // Update the URL if necessary
+
+            fetch(url, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": csrfToken,
+                },
+                body: JSON.stringify({
+                    name: projectName,
+                    project_data: projectDataInput.value,
+                }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.success) {
+                        window.location.href = `/projects/${projectId}`;
+                    } else {
+                        console.error("Update failed:", data);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        });
+
+        document
+        .getElementById("save-option")
         .addEventListener("click", function (event) {
             event.preventDefault();
 
@@ -220,6 +264,38 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
         });
 
+        document
+        .getElementById("copyProjectButton")
+        .addEventListener("click", function() {
+            // const csrfToken = document.querySelector('input[name="_token"]').value; // Get CSRF token from hidden input
+
+            fetch(`/projects/${projectId}/copy`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": csrfToken,
+                },
+                
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data); // Handle success
+                window.location.href = data.redirect;
+                // alert("Project copied successfully!");
+                // Optionally, redirect or update the UI here
+            })
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
+            });
+        });
+
+
+
 
     // Function to add more rows
     // function addRows() {
@@ -255,8 +331,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // document
     //     .getElementById("add-rows-button")
     //     .addEventListener("click", addRows);
+    var lastSavedData =  savedData;
     generateTableFromSavedData();
-    const lastSavedData =  savedData;
     function autoSave() {
         
         const tableData = extractTableData();
@@ -265,7 +341,7 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("No changes to save");
             return;
         }
-        
+        lastSavedData = tableData;
         const projectDataInput =
             document.getElementById("project-data-input");
         projectDataInput.value = JSON.stringify(tableData);
