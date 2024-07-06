@@ -20,7 +20,6 @@ Route::get('/dashboard', [ProjectController::class, 'index'])->middleware('auth'
 // Project routes
 Route::resource('projects', ProjectController::class)->middleware('auth');
 Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->middleware('auth')->name('projects.destroy');
-
+Route::post('/projects/{project}/copy', [ProjectController::class, 'copyProject'])->middleware('auth')->name('projects.copy');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
