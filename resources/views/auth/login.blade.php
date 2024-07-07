@@ -27,17 +27,16 @@
                                     <img src="{{ asset('images/comp/lbwlogo.png') }}" alt="BootstrapBrain Logo"
                                         width="250">
                                 </a>
-                                </a>
                             </div>
                             <h2 class="fs-6 fw-normal text-center text-secondary mb-4">Sign in to your account</h2>
                             <form method="POST" action="{{ route('login.post') }}">
                                 @csrf
 
-                                @session('error')
+                                @if (session('error'))
                                     <div class="alert alert-danger" role="alert">
-                                        {{ $value }}
+                                        {{ session('error') }}
                                     </div>
-                                @endsession
+                                @endif
 
                                 <div class="row gy-2 overflow-hidden">
                                     <div class="col-12">
@@ -57,8 +56,7 @@
                                         <div class="form-floating mb-3">
                                             <input type="password"
                                                 class="form-control @error('password') is-invalid @enderror"
-                                                name="password" id="password" value="" placeholder="Password"
-                                                required>
+                                                name="password" id="password" placeholder="Password" required>
                                             <label for="password" class="form-label">{{ __('Password') }}</label>
                                         </div>
                                         @error('password')
@@ -76,7 +74,7 @@
                                                     Keep me logged in
                                                 </label>
                                             </div>
-                                            <a href="#!"
+                                            <a href="{{ route('forget.password.get') }}"
                                                 class="link-primary text-decoration-none">{{ __('forgot password?') }}</a>
                                         </div>
                                     </div>
