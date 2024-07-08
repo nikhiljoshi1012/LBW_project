@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
 const selectedText = {
     text: "",
     start: 0,
-    end: 0, 
+    end: 0,
 };
 function selectedStringLength(str) {
     const regex = /[UuLl]/g;
@@ -256,7 +256,7 @@ function createKeyboard() {
     }
     document.getElementById("enter-key").classList.add("btn", "btn-primary");
     document.getElementById("shift-key").classList.add("btn", "btn-primary");
-    if(shiftKey === 1){
+    if (shiftKey === 1) {
         document.getElementById("shift-key").classList.add("active");
     }
     document.getElementById("showSwarKeyboard").checked = true;
@@ -266,16 +266,16 @@ function toggleKeyboard() {
     const showSwarKeyboard = document.getElementById("showSwarKeyboard");
     const keyboardContainer = document.getElementById("keyboard-container");
     if (!showSwarKeyboard.checked) {
-        keyboardContainer.style.display="none";
-    } else{
-        keyboardContainer.style.display="flex";
+        keyboardContainer.style.display = "none";
+    } else {
+        keyboardContainer.style.display = "flex";
     }
     console.log(showSwarKeyboard.checked);
 }
 
 function toggleShiftKey() {
     shiftKey = (shiftKey + 1) % 2;
-    
+
     createKeyboard();
 }
 
@@ -286,11 +286,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function setActiveCell(cell) {
     if (activeCell) {
-    (activeCell.parentElement).parentElement.classList.remove("highlighted");
-    }   
+        activeCell.parentElement.parentElement.classList.remove("highlighted");
+    }
     activeCell = cell;
-    (activeCell.parentElement).parentElement.classList.add("highlighted");
-    
+    activeCell.parentElement.parentElement.classList.add("highlighted");
+
     document.getElementById("preview-inputbox").value = activeCell.value;
 }
 
@@ -439,14 +439,11 @@ function addRows() {
         for (let j = 0; j < columnCount; j++) {
             const td = document.createElement("td");
             const fontFamily =
-                    i % 2 === 0
-                        ? "ome_bhatkhande_hindi"
-                        : "Noto Sans Devanagari";
-                const classItem =
-                    i % 2 === 0 ? "bhatkhande-hindi" : "devnagari";
-                td.innerHTML = `<code><input type="text" class="table-cell ${classItem}" style="min-width: 150px; border: none; outline: none; font-family: ${fontFamily};" data-cell="${
-                    existingRowCount + i
-                }-${j}" maxlength="4"  onfocus="setActiveCell(this)"></code>`;
+                i % 2 === 0 ? "ome_bhatkhande_hindi" : "Noto Sans Devanagari";
+            const classItem = i % 2 === 0 ? "bhatkhande-hindi" : "devnagari";
+            td.innerHTML = `<code><input type="text" class="table-cell ${classItem}" style="min-width: 150px; border: none; outline: none; font-family: ${fontFamily};" data-cell="${
+                existingRowCount + i
+            }-${j}" maxlength="4"  onfocus="setActiveCell(this)"></code>`;
 
             td.innerHTML = `<code><input type="text" style="min-width: 150px; border: none; outline: none; font-family: ome_bhatkhande_hindi;" data-cell="${
                 existingRowCount + i
@@ -459,16 +456,14 @@ function addRows() {
         }
         if ((existingRowCount + i) % 2 === 0) {
             tr.classList.add("bold-top-border");
-
         }
 
         if ((existingRowCount + i) % 2 === 1) {
             tr.classList.add("bold-bottom-border");
-
         }
         tbody.appendChild(tr);
     }
-    tbody.appendChild(document.createElement("br"))
+    tbody.appendChild(document.createElement("br"));
 
     // Add event listeners for the new inputs
     const inputs = tbody.querySelectorAll("input");
@@ -487,12 +482,18 @@ function addRows() {
     updateCellValuesDisplay();
 }
 
-
-
 function addColumn(cells) {
     // Determine the current number of rows and columns
-    const rows = Object.keys(cells).reduce((max, key) => Math.max(max, parseInt(key.split('-')[0])), 0) + 1;
-    const columns = Object.keys(cells).reduce((max, key) => Math.max(max, parseInt(key.split('-')[1])), 0) + 1;
+    const rows =
+        Object.keys(cells).reduce(
+            (max, key) => Math.max(max, parseInt(key.split("-")[0])),
+            0
+        ) + 1;
+    const columns =
+        Object.keys(cells).reduce(
+            (max, key) => Math.max(max, parseInt(key.split("-")[1])),
+            0
+        ) + 1;
 
     const currentData = extractTableData();
     const columnCount = currentData.columnCount + 1;
@@ -513,33 +514,39 @@ function addColumn(cells) {
         updatedCells[newKey] = "";
     }
 
-    savedData
+    savedData;
 }
 
 function resizeTable() {
     const savedData = projectData;
     const resizeRow = document.getElementById("resizeRow");
     const resizeCol = document.getElementById("resizeCol");
-    const additionalRows = parseInt(resizeRow.value, savedData.rowCount) - savedData.rowCount/2;
-    const additionalColumns = parseInt(resizeCol.value, savedData.columnCount) - savedData.columnCount;
+    const additionalRows =
+        parseInt(resizeRow.value, savedData.rowCount) - savedData.rowCount / 2;
+    const additionalColumns =
+        parseInt(resizeCol.value, savedData.columnCount) -
+        savedData.columnCount;
     if (additionalRows < 0 || additionalColumns < 0) {
         resizeRow.classList.add("is-invalid");
         resizeCol.classList.add("is-invalid");
-        console.log(additionalRows, additionalColumns, savedData.rowCount, savedData.columnCount);
+        console.log(
+            additionalRows,
+            additionalColumns,
+            savedData.rowCount,
+            savedData.columnCount
+        );
         return;
-    }
-    else{
+    } else {
         resizeRow.classList.remove("is-invalid");
         resizeCol.classList.remove("is-invalid");
     }
-
 
     const addButton = document.getElementById("resize-button");
 
     if (addButton.disabled) return;
 
     addButton.disabled = true;
-    setTimeout(() => addButton.disabled = false, 5000);
+    setTimeout(() => (addButton.disabled = false), 5000);
 
     const tbody = document.getElementById("table-body");
     const existingRowCount = tbody.rows.length;
@@ -552,11 +559,13 @@ function resizeTable() {
 
     // Add Columns to existing rows if additionalColumns > 0
     if (additionalColumns > 0) {
-        for (let i = 0; i < existingRowCount*2; i++) {
+        for (let i = 0; i < existingRowCount * 2; i++) {
             const tr = tbody.rows[i];
             for (let j = 0; j < additionalColumns; j++) {
                 const td = document.createElement("td");
-                td.innerHTML = `<input type="text" data-cell="${i}-${existingColumnCount + j}">`;
+                td.innerHTML = `<input type="text" data-cell="${i}-${
+                    existingColumnCount + j
+                }">`;
                 tr.appendChild(td);
             }
         }
@@ -565,7 +574,6 @@ function resizeTable() {
     // Update the display with the new row and column count
     updateCellValuesDisplay();
 }
-
 
 function handleKeyDown(event, index, columnCount, inputs) {
     let newIndex;
