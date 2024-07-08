@@ -74,8 +74,8 @@
                                                     Keep me logged in
                                                 </label>
                                             </div>
-                                            {{-- <a href="{{ route('forget.password.get') }}"
-                                                class="link-primary text-decoration-none">{{ __('forgot password?') }}</a> --}}
+                                            <a href="{{ route('forget.password.get') }}"
+                                                class="link-primary text-decoration-none">{{ __('forgot password?') }}</a>
                                         </div>
                                     </div>
                                     <div class="col-12">
