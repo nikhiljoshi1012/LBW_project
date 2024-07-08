@@ -1,12 +1,32 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PdfController; 
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfileController;  
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SampleEmail;
+
+
+
+
+
+//Custom auth routes
+Route::get('login', [AuthController::class, 'index'])->name('login');
+Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post'); 
+Route::get('registration', [AuthController::class, 'registration'])->name('register');
+Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post'); 
+Route::get('dashboard', [AuthController::class, 'dashboard']); 
+Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+
+
+
 
 
 
