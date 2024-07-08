@@ -12,7 +12,30 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SampleEmail;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
+use App\Models\User;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Schedule;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('/dashboard');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 
 
@@ -27,7 +50,7 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 
 
-
+Route::get('/profile', 'ProfileController@show')->name('profile');
 
 
 
@@ -63,9 +86,10 @@ Route::get('/raaga_taal', function () {
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 // Dashboard route
 Route::get('/dashboard', [ProjectController::class, 'index'])->middleware('auth')->name('dashboard');
+
 
 // Project routes
 Route::resource('projects', ProjectController::class)->middleware('auth');

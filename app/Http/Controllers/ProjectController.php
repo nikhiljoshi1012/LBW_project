@@ -8,8 +8,20 @@ use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Support\Facades\Log;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 class ProjectController extends Controller
 {
+    public function update(Request $request): RedirectResponse
+    {
+        $user = $request->user();
+ 
+        if (Auth::check()) {
+            // The user is logged in...
+        }
+ 
+        return redirect('/dashboard');
+    }
+
     public function index()
     {
         // Show only the projects that belong to the authenticated user

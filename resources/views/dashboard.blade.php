@@ -1,30 +1,17 @@
-<head>
-    <link rel="stylesheet" href="{{ css('custom.css') }}">
-</head>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Dashboard') }}
+        </h2>
+    </x-slot>
 
-@extends('layouts.app')
-
-@section('content')
-
-    <body>
-
-        <div class="container">
-            <h1>Dashboard</h1>
-            @if (session('status'))
-                <div class="alert alert-success">
-                    {{ session('status') }}
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    {{ __("You're logged in!") }}
                 </div>
-            @endif
-            <a href="{{ route('projects.create') }}" class="btn btn-primary create-project-btn">Create New Project</a>
-            <h2>Your Projects</h2>
-            <ul>
-                @foreach ($projects as $project)
-                    <li>
-                        <a href="{{ route('projects.show', $project->id) }}">{{ $project->name }}</a>
-                        <span>{{ $project->created_at }}</span>
-                    </li>
-                @endforeach
-            </ul>
+            </div>
         </div>
-    @endsection
-</body>
+    </div>
+</x-app-layout>

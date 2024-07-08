@@ -82,9 +82,8 @@ class RegisterController extends Controller
 
 protected function registered(Request $request, $user)
 {
-    notify()->success('Welcome, ' . Auth::user()->name . '!', 'Registration Successful');
+    $user->sendEmailVerificationNotification();
 
-    return redirect($this->redirectPath());
+    return redirect($this->redirectPath())->with('verified', true);
 }
-
 }
