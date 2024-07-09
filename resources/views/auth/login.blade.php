@@ -27,7 +27,6 @@
                                     <img src="{{ asset('images/comp/lbwlogo.png') }}" alt="BootstrapBrain Logo"
                                         width="250">
                                 </a>
-                                </a>
                             </div>
                             <h2 class="fs-6 fw-normal text-center text-secondary mb-4">Sign in to your account</h2>
                             <form method="POST" action="{{ route('login.post') }}">
@@ -54,12 +53,29 @@
                                         @enderror
                                     </div>
                                     <div class="col-12">
-                                        <div class="form-floating mb-3">
+                                        <div class="form-floating mb-3 input-group">
                                             <input type="password"
                                                 class="form-control @error('password') is-invalid @enderror"
                                                 name="password" id="password" value="" placeholder="Password"
                                                 required>
                                             <label for="password" class="form-label">{{ __('Password') }}</label>
+                                            <span class="input-group-text" onclick="password_show_hide();">
+                                                <svg id="show_eye" xmlns="http://www.w3.org/2000/svg" width="16"
+                                                    height="16" fill="currentColor" class="bi bi-eye-fill"
+                                                    viewBox="0 0 16 16">
+                                                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+                                                    <path
+                                                        d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+                                                </svg>
+                                                <svg id="hide_eye" xmlns="http://www.w3.org/2000/svg" width="16"
+                                                    height="16" fill="currentColor"
+                                                    class="bi bi-eye-slash-fill d-none" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z" />
+                                                    <path
+                                                        d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z" />
+                                                </svg>
+                                            </span>
                                         </div>
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">
@@ -100,6 +116,23 @@
         </div>
     </section>
 
+    <script>
+        function password_show_hide() {
+            var x = document.getElementById("password");
+            var show_eye = document.getElementById("show_eye");
+            var hide_eye = document.getElementById("hide_eye");
+            hide_eye.classList.remove("d-none");
+            if (x.type === "password") {
+                x.type = "text";
+                show_eye.classList.add("d-none");
+                hide_eye.classList.remove("d-none");
+            } else {
+                x.type = "password";
+                show_eye.classList.remove("d-none");
+                hide_eye.classList.add("d-none");
+            }
+        }
+    </script>
 </body>
 
 </html>

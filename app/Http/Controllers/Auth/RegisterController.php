@@ -12,6 +12,8 @@ use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException; 
 use Illuminate\Support\Facades\Auth;
+use Mckenziearts\Notify\Facades\LaravelNotify as Notify;
+
 class RegisterController extends Controller
 {
     /*
@@ -79,12 +81,11 @@ class RegisterController extends Controller
 
     return $user;
 }
-
+    
 protected function registered(Request $request, $user)
 {
     notify()->success('Welcome, ' . Auth::user()->name . '!', 'Registration Successful');
-
-    return redirect($this->redirectPath());
+        return redirect($this->redirectPath());
 }
 
 }

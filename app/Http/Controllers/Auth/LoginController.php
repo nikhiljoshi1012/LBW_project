@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Mckenziearts\Notify\Facades\LaravelNotify as Notify;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -42,29 +43,29 @@ class LoginController extends Controller
     }
 
     public function login(Request $request)
-{
-    $this->validateLogin($request);
+    {
+        $this->validateLogin($request);
+    
+        if ($this->attemptLogin($request)) {
+            notify()->success('Welcome back, ' . Auth::user()->name . '!', 'Login Successful');
+    
+            return $this->sendLoginResponse($request);
+        }
+    
+        $this->incrementLoginAttempts($request);
 
-    if ($this->attemptLogin($request)) {
-        notify()->success('Welcome back, ' . Auth::user()->name . '!', 'Login Successful');
-
-        return $this->sendLoginResponse($request);
+        return $this->sendFailedLoginResponse($request);
     }
-
-    $this->incrementLoginAttempts($request);
-
-    return $this->sendFailedLoginResponse($request);
-}
-
-protected function sendFailedLoginResponse(Request $request)
-{
-    notify()->error('Login failed, please check your credentials and try again.', 'Login Failed');
-
-    return redirect()->back()
-        ->withInput($request->only($this->username(), 'remember'))
-        ->withErrors([
-            $this->username() => [trans('auth.failed')],
-        ]);
-}
+    
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        notify()->error('Login failed, please check your credentials and try again.', 'Login Failed');
+    
+        return redirect()->back()
+            ->withInput($request->only($this->username(), 'remember'))
+            ->withErrors([
+                $this->username() => [trans('auth.failed')],
+            ]);
+    }
 
 }
