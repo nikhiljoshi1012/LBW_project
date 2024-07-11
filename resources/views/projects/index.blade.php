@@ -256,7 +256,8 @@
     <script src="//cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
     <script src="<script src="
         https://cdn.datatables.net/v/bs5/dt-2.0.8/cr-2.0.3/date-1.5.2/fc-5.0.1/fh-4.0.1/kt-2.12.1/r-3.0.2/rg-1.5.0/rr-1.5.0/sc-2.4.3/sb-1.7.1/sp-2.3.1/sl-2.0.3/sr-1.4.1/datatables.min.js">
-    </script>"></script>
+    </script>
+    </script>
     <script>
         $(document).ready(function() {
             $('#myTable').DataTable(); // Corrected the selector
