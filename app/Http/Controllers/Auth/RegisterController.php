@@ -83,9 +83,9 @@ class RegisterController extends Controller
 }
     
 protected function registered(Request $request, $user)
-{
-    notify()->success('Welcome, ' . Auth::user()->name . '!', 'Registration Successful');
-        return redirect($this->redirectPath());
-}
+    {
+        session()->flash('success', 'Registered successfully');
+        return redirect()->intended('dashboard');
+    }
 
 }

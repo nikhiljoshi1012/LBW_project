@@ -1,3 +1,4 @@
+@extends('layouts.app')
 <!DOCTYPE html>
 <html>
 
@@ -10,6 +11,94 @@
     <style type="text/css">
         body {
             background: #F8F9FA;
+        }
+
+
+
+        .box {
+            width: 140px;
+            height: auto;
+            float: left;
+            transition: .5s linear;
+            position: relative;
+            display: block;
+            overflow: hidden;
+            padding: 15px;
+            text-align: center;
+            margin: 0 5px;
+            background: transparent;
+            text-transform: uppercase;
+            font-weight: 900;
+        }
+
+        .box:before {
+            position: absolute;
+            content: '';
+            left: 0;
+            bottom: 0;
+            height: 4px;
+            width: 100%;
+            border-bottom: 4px solid transparent;
+            border-left: 4px solid transparent;
+            box-sizing: border-box;
+            transform: translateX(100%);
+        }
+
+        .box:after {
+            position: absolute;
+            content: '';
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            border-top: 4px solid transparent;
+            border-right: 4px solid transparent;
+            box-sizing: border-box;
+            transform: translateX(-100%);
+        }
+
+        .box:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .box:hover:before {
+            border-color: #262626;
+            height: 100%;
+            transform: translateX(0);
+            transition: .3s transform linear, .3s height linear .3s;
+        }
+
+        .box:hover:after {
+            border-color: #262626;
+            height: 100%;
+            transform: translateX(0);
+            transition: .3s transform linear, .3s height linear .5s;
+        }
+
+        button {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+            outline: none;
+            border: none;
+            background: transparent;
+        }
+
+        /* Add this CSS to center the login page with automatic padding */
+        .login-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            /* Use full height of the viewport */
+            padding: auto;
+        }
+
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
         }
     </style>
 </head>
@@ -25,7 +114,7 @@
                             <div class="text-center mb-3">
                                 <a href="#!">
                                     <img src="{{ asset('images/comp/lbwlogo.png') }}" alt="BootstrapBrain Logo"
-                                        width="250">
+                                        width="150" height="100" class="center">
                                 </a>
                             </div>
                             <h2 class="fs-6 fw-normal text-center text-secondary mb-4">Sign in to your account</h2>
@@ -94,13 +183,20 @@
                                             </div>
                                             <a href="#!"
                                                 class="link-primary text-decoration-none">{{ __('forgot password?') }}</a>
+
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="d-grid my-3">
-                                            <button class="btn btn-primary btn-lg"
-                                                type="submit">{{ __('Login') }}</button>
+
+                                            <button class="btn btn-primary btn-lg" type="submit">
+                                                <span class="box">{{ __('Login') }}</span>
+
+                                            </button>
+
+
                                         </div>
+
                                     </div>
                                     <div class="col-12">
                                         <p class="m-0 text-secondary text-center">Don't have an account? <a

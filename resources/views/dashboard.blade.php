@@ -1,7 +1,3 @@
-<head>
-    <link rel="stylesheet" href="{{ css('custom.css') }}">
-</head>
-
 @extends('layouts.app')
 
 @section('content')

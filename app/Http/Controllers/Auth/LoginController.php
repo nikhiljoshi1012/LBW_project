@@ -44,17 +44,15 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $this->validateLogin($request);
-    
-        if ($this->attemptLogin($request)) {
-            notify()->success('Welcome back, ' . Auth::user()->name . '!', 'Login Successful');
-    
-            return $this->sendLoginResponse($request);
-        }
-    
-        $this->incrementLoginAttempts($request);
+        // Validate the request...
 
-        return $this->sendFailedLoginResponse($request);
+        if (Auth::attempt($request->only('email', 'password'))) {
+            session()->flash('success', 'Signed in successfully');
+            return redirect()->intended('dashboard');
+        }
+
+        session()->flash('error', 'Login failed');
+        return redirect()->back();
     }
     
     protected function sendFailedLoginResponse(Request $request)
