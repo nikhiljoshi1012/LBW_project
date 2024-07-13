@@ -100,7 +100,7 @@
               <a class="dropdown-item border-top">
                 Print
               </a>
-              <a class="dropdown-item border-top">
+              <a class="dropdown-item border-top" data-bs-toggle="modal" data-bs-target="#project-details">
                 Details
               </a>
 
@@ -113,10 +113,10 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-              <a class="dropdown-item">
+              <a class="dropdown-item" href="javascript:(function(){if(getActiveCell()) navigator.clipboard.writeText(getActiveCell().value);})()">
                 Copy
               </a>
-              <a class="dropdown-item">
+              <a class="dropdown-item" href="javascript:(function(){if(getActiveCell()) navigator.clipboard.readText().then((copiedText) => {getActiveCell().value=copiedText;});})()">
                 Paste
               </a>
               <a class="dropdown-item border-top" href="">
@@ -310,7 +310,44 @@
       </div>
     </div>
   </div>
-
+  
+  <!-- Modal Template -->
+  <div class="modal fade" id="project-details" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{$project->name}} Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <table class="table table-hover">
+          <tbody>
+            <tr>
+              <th scope="row">Project Name</th>
+              <td>{{$project->name}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Created By</th>
+              <td>{{$project->user_id}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Created At</th>
+              <td>{{$project->created_at}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Last Modified</th>
+              <td>{{$project->updated_at}}</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">

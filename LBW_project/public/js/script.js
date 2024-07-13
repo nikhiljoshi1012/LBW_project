@@ -293,6 +293,9 @@ function setActiveCell(cell) {
 
     document.getElementById("preview-inputbox").value = activeCell.value;
 }
+function getActiveCell(){
+    return activeCell;
+}
 
 const cellValues = {
     rowCount: 14, // Initial row count
