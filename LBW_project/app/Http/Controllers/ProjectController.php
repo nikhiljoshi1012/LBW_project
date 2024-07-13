@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Gate;
 
 class ProjectController extends Controller
 {
+   
     public function index()
     {
         // Show only the projects that belong to the authenticated user
@@ -110,6 +111,21 @@ class ProjectController extends Controller
         $project->save();
 
         return redirect()->route('dashboard')->with('success', 'Project created successfully.');
+    }
+
+    public function setVisibility(Request $request, $id)
+    {
+        
+        
+        $project = Project::findOrFail($id);
+        if($project->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+            return; 
+        }
+        $project->visibility = $request->input('visibility');
+        $project->save();
+
+        return response()->json(['success' => true]);
     }
 
     public function show($id)
