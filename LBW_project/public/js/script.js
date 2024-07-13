@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
         event.preventDefault(); // Prevent default form submission
         saveData(); // Call the saveData function
     });
+    createKeyboard();
+    //generateTable();
 });
 
 const selectedText = {
@@ -252,10 +254,28 @@ function createKeyboard() {
         }
         keyboardContainer.appendChild(button);
     }
+    document.getElementById("enter-key").classList.add("btn", "btn-primary");
+    document.getElementById("shift-key").classList.add("btn", "btn-primary");
+    if (shiftKey === 1) {
+        document.getElementById("shift-key").classList.add("active");
+    }
+    document.getElementById("showSwarKeyboard").checked = true;
+}
+
+function toggleKeyboard() {
+    const showSwarKeyboard = document.getElementById("showSwarKeyboard");
+    const keyboardContainer = document.getElementById("keyboard-container");
+    if (!showSwarKeyboard.checked) {
+        keyboardContainer.style.display = "none";
+    } else {
+        keyboardContainer.style.display = "flex";
+    }
+    console.log(showSwarKeyboard.checked);
 }
 
 function toggleShiftKey() {
     shiftKey = (shiftKey + 1) % 2;
+
     createKeyboard();
 }
 
@@ -265,8 +285,16 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function setActiveCell(cell) {
+    if (activeCell) {
+        activeCell.parentElement.parentElement.classList.remove("highlighted");
+    }
     activeCell = cell;
+    activeCell.parentElement.parentElement.classList.add("highlighted");
+
     document.getElementById("preview-inputbox").value = activeCell.value;
+}
+function getActiveCell(){
+    return activeCell;
 }
 
 const cellValues = {
@@ -293,7 +321,7 @@ function generateRowIdentifier(index) {
 function generateTable() {
     const columnCount = parseInt(
         document.getElementById("column-count").value,
-        5
+        10
     );
     const tableContainer = document.getElementById("table-container");
     tableContainer.innerHTML = ""; // Clear previous table
@@ -372,17 +400,26 @@ function generateTable() {
     if (inputs.length > 0) {
         inputs[0].focus(); // Focus the first cell to trigger the highlight
     }
+
+    updateCellValuesDisplay();
+
+    tableContainer.style.display = "block";
+    document.getElementById("add-rows-button").style.display = "inline";
+    document.getElementById("save-button").style.display = "inline";
+    document.getElementsByClassName("keyboard-container")[0].style.display =
+        "flex";
 }
 
 function addRows() {
-    if (!canAddRows) {
-        alert("Please wait 5 seconds before adding more rows.");
+    const addButton = document.getElementById("add-rows-button");
+
+    if (addButton.disabled) {
         return;
     }
 
-    canAddRows = false; // Disable the button
+    addButton.disabled = true; // Disable the button
     setTimeout(() => {
-        canAddRows = true; // Re-enable the button after 5 seconds
+        addButton.disabled = false; // Re-enable the button after 5 seconds
     }, 5000);
 
     const tbody = document.getElementById("table-body");
@@ -404,14 +441,24 @@ function addRows() {
 
         for (let j = 0; j < columnCount; j++) {
             const td = document.createElement("td");
+            const fontFamily =
+                i % 2 === 0 ? "ome_bhatkhande_hindi" : "Noto Sans Devanagari";
+            const classItem = i % 2 === 0 ? "bhatkhande-hindi" : "devnagari";
+            td.innerHTML = `<code><input type="text" class="table-cell ${classItem}" style="min-width: 150px; border: none; outline: none; font-family: ${fontFamily};" data-cell="${
+                existingRowCount + i
+            }-${j}" maxlength="4"  onfocus="setActiveCell(this)"></code>`;
+
             td.innerHTML = `<code><input type="text" style="min-width: 150px; border: none; outline: none; font-family: ome_bhatkhande_hindi;" data-cell="${
                 existingRowCount + i
-            }-${j}"></code>`;
+            }-${j}" onfocus="setActiveCell(this)"></code>`;
 
-            if ((j + 1) % 4 === 0) {
-                td.classList.add("bold-right-border");
-            }
+            // if ((j + 1) % 4 === 0) {
+            //     td.classList.add("bold-right-border");
+            // }
             tr.appendChild(td);
+        }
+        if ((existingRowCount + i) % 2 === 0) {
+            tr.classList.add("bold-top-border");
         }
 
         if ((existingRowCount + i) % 2 === 1) {
@@ -419,6 +466,7 @@ function addRows() {
         }
         tbody.appendChild(tr);
     }
+    tbody.appendChild(document.createElement("br"));
 
     // Add event listeners for the new inputs
     const inputs = tbody.querySelectorAll("input");
@@ -434,6 +482,99 @@ function addRows() {
     });
 
     // Update the display with the new row count
+    updateCellValuesDisplay();
+}
+
+function addColumn(cells) {
+    // Determine the current number of rows and columns
+    const rows =
+        Object.keys(cells).reduce(
+            (max, key) => Math.max(max, parseInt(key.split("-")[0])),
+            0
+        ) + 1;
+    const columns =
+        Object.keys(cells).reduce(
+            (max, key) => Math.max(max, parseInt(key.split("-")[1])),
+            0
+        ) + 1;
+
+    const currentData = extractTableData();
+    const columnCount = currentData.columnCount + 1;
+    const rowCount = currentData.rowCount;
+    var cells = currentData.cells;
+
+    // Create a new object to store the updated cells
+    const updatedCells = {};
+
+    // Copy the original cells to the new object
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < columns; j++) {
+            const key = `${i}-${j}`;
+            updatedCells[key] = cells[key];
+        }
+        // Add the new column for the current row
+        const newKey = `${i}-${columns}`;
+        updatedCells[newKey] = "";
+    }
+
+    savedData;
+}
+
+function resizeTable() {
+    const savedData = projectData;
+    const resizeRow = document.getElementById("resizeRow");
+    const resizeCol = document.getElementById("resizeCol");
+    const additionalRows =
+        parseInt(resizeRow.value, savedData.rowCount) - savedData.rowCount / 2;
+    const additionalColumns =
+        parseInt(resizeCol.value, savedData.columnCount) -
+        savedData.columnCount;
+    if (additionalRows < 0 || additionalColumns < 0) {
+        resizeRow.classList.add("is-invalid");
+        resizeCol.classList.add("is-invalid");
+        console.log(
+            additionalRows,
+            additionalColumns,
+            savedData.rowCount,
+            savedData.columnCount
+        );
+        return;
+    } else {
+        resizeRow.classList.remove("is-invalid");
+        resizeCol.classList.remove("is-invalid");
+    }
+
+    const addButton = document.getElementById("resize-button");
+
+    if (addButton.disabled) return;
+
+    addButton.disabled = true;
+    setTimeout(() => (addButton.disabled = false), 5000);
+
+    const tbody = document.getElementById("table-body");
+    const existingRowCount = tbody.rows.length;
+    const existingColumnCount = tbody.rows[0] ? tbody.rows[0].cells.length : 0;
+
+    // Add Rows
+    for (let i = 0; i < additionalRows; i++) {
+        addRows();
+    }
+
+    // Add Columns to existing rows if additionalColumns > 0
+    if (additionalColumns > 0) {
+        for (let i = 0; i < existingRowCount * 2; i++) {
+            const tr = tbody.rows[i];
+            for (let j = 0; j < additionalColumns; j++) {
+                const td = document.createElement("td");
+                td.innerHTML = `<input type="text" data-cell="${i}-${
+                    existingColumnCount + j
+                }">`;
+                tr.appendChild(td);
+            }
+        }
+    }
+
+    // Update the display with the new row and column count
     updateCellValuesDisplay();
 }
 
