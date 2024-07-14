@@ -17,7 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
     </script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
@@ -105,7 +105,7 @@
                             <a class="dropdown-item border-top" id="save-option">
                                 Save
                             </a>
-                            <a class="dropdown-item">
+                            <a class="dropdown-item" id="download-pdf">
                                 Export as PDF
                             </a>
                             <a class="dropdown-item">
@@ -457,6 +457,22 @@
 
         observer.observe(el);
     </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("download-pdf").addEventListener("click", function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'PDF Downloaded Successfully',
+                    showConfirmButton: true,
+                }).then(() => {
+                    document.getElementById('pdf-download-frame').src =
+                        "{{ route('download-pdf', ['id' => $project->id]) }}";
+                });
+            });
+        });
+    </script>
+    <iframe id="pdf-download-frame" style="display: none;"></iframe>
 </body>
 
 </html>

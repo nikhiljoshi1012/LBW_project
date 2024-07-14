@@ -1,6 +1,4 @@
 <?php
-
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Auth;
@@ -53,16 +51,14 @@ Route::get('/dashboard', function () {
 
 Route::get('download-pdf/{id}', [App\Http\Controllers\PdfController::class, 'downloadPdf'])->name('download-pdf');
 
-Route::get('/', function () {
-    notify()->success('Welcome to Raaga Taal', 'Welcome');  
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     notify()->success('Welcome to Raaga Taal', 'Welcome');  
+//     return view('welcome');
+// });
 
 
 
-Route::get('/raaga_taal', function () {
-    return view('raaga_taal');
-});
+
 
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
@@ -75,3 +71,7 @@ Route::get('/dashboard', [ProjectController::class, 'index'])->middleware('auth'
 Route::resource('projects', ProjectController::class)->middleware('auth');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->middleware('auth')->name('projects.destroy');
+Route::post('/projects/{project}/copy', [ProjectController::class, 'copyProject'])->middleware('auth')->name('projects.copy');

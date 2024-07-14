@@ -158,7 +158,7 @@ class ProjectController extends Controller
         $updatedAt->setTimezone(new \DateTimeZone($timezone));
         $formattedUpdatedAt = $updatedAt->format('d-m-Y');
 
-        return view('projects.show', compact('id','project', 'formattedCreatedAt', 'formattedUpdatedAt'));
+        return view('projects.show', compact('id','project','Allprojects' ,'formattedCreatedAt', 'formattedUpdatedAt'));
     
     }
 
