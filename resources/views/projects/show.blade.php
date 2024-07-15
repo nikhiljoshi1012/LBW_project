@@ -20,6 +20,16 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <style>
+        .spinner-border {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            display: none;
+            /* Initially hidden */
+        }
+    </style>
 </head>
 
 <body>
@@ -204,62 +214,68 @@
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Keyboard
                         </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item"
-                                href="javascript:(function(){if(typeof gamabhanaExt != 'undefined') {__predefKb='#gamabhana#'; try { handlePreDefKB(); } catch(x1) {}; gamabhanaExt.changeLayout(null); __predefLangIndex=0; try {handlePreDefLang();} catch(x2) {}; attemptRun();return; } else { t=new Date().getTime();document.body.appendChild(document.createElement('script')).src='https://www.gamabhana.com/gamabhanaWidget/?mode=custom&amp;l=0&amp;k=1&amp;n=&amp;c=devnagari&amp;q='+t;}})();">
-                                gamabhana
-                            </a>
-                            <a class="dropdown-item"
-                                href="javascript:(function(){if(typeof gamabhanaExt != 'undefined'){__predefKb='#fontfreedom#'; try { handlePreDefKB();} catch(x1) {}; gamabhanaExt.changeLayout(null); __predefLangIndex=0; try { handlePreDefLang();} catch(x2) {}; 	attemptRun();return; };t=new Date().getTime();document.body.appendChild(document.createElement('script')).src='https://www.gamabhana.com/gamabhanaWidget/?mode=custom&amp;l=0&amp;k=2&amp;n=&amp;c=devnagari&amp;q='+t;})();">
-                                fontfreedom
-                            </a>
-                            <a class="dropdown-item"
-                                href="javascript:(function(){if(typeof gamabhanaExt != 'undefined'){__predefKb='#inscript#';try { handlePreDefKB();} catch(x1) {}; gamabhanaExt.changeLayout(null); __predefLangIndex=0; try { handlePreDefLang(); } catch(x2) {};	attemptRun();return; };t=new Date().getTime();document.body.appendChild(document.createElement('script')).src='https://www.gamabhana.com/gamabhanaWidget/?mode=custom&amp;l=0&amp;k=3&amp;n=&amp;c=devnagari&amp;q='+t;})();">
-                                Inscript
-                            </a>
-                            <a class="dropdown-item"
-                                href="javascript:(t13nb=window.t13nb||function(l){var t=t13nb,d=document,o=d.body,c='createElement',a='appendChild',w='clientWidth',i=d[c]('span'),s=i.style,x=o[a](d[c]('script'));if(o){if(!t.l){t.l=x.id='t13ns';o[a](i).id='t13n';i.innerHTML='Loading Transliteration';s.cssText='z-index:99;font-size:18px;background:#FFF1A8;top:0';s.position=d.all?'absolute':'fixed';s.left=((o[w]-i[w])/2)+'px';x.src='https://t13n.googlecode.com/svn/trunk/blet/rt13n.js?l='+l}}else setTimeout(t,500)})('mr')">
-                                Google
-                            </a>
+                        <div class="text-center">
+                            <div class="spinner-border" role="status" id="autosave-spinner">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
                         </div>
                     </div>
-
-
-
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item"
+                            href="javascript:(function(){if(typeof gamabhanaExt != 'undefined') {__predefKb='#gamabhana#'; try { handlePreDefKB(); } catch(x1) {}; gamabhanaExt.changeLayout(null); __predefLangIndex=0; try {handlePreDefLang();} catch(x2) {}; attemptRun();return; } else { t=new Date().getTime();document.body.appendChild(document.createElement('script')).src='https://www.gamabhana.com/gamabhanaWidget/?mode=custom&amp;l=0&amp;k=1&amp;n=&amp;c=devnagari&amp;q='+t;}})();">
+                            gamabhana
+                        </a>
+                        <a class="dropdown-item"
+                            href="javascript:(function(){if(typeof gamabhanaExt != 'undefined'){__predefKb='#fontfreedom#'; try { handlePreDefKB();} catch(x1) {}; gamabhanaExt.changeLayout(null); __predefLangIndex=0; try { handlePreDefLang();} catch(x2) {}; 	attemptRun();return; };t=new Date().getTime();document.body.appendChild(document.createElement('script')).src='https://www.gamabhana.com/gamabhanaWidget/?mode=custom&amp;l=0&amp;k=2&amp;n=&amp;c=devnagari&amp;q='+t;})();">
+                            fontfreedom
+                        </a>
+                        <a class="dropdown-item"
+                            href="javascript:(function(){if(typeof gamabhanaExt != 'undefined'){__predefKb='#inscript#';try { handlePreDefKB();} catch(x1) {}; gamabhanaExt.changeLayout(null); __predefLangIndex=0; try { handlePreDefLang(); } catch(x2) {};	attemptRun();return; };t=new Date().getTime();document.body.appendChild(document.createElement('script')).src='https://www.gamabhana.com/gamabhanaWidget/?mode=custom&amp;l=0&amp;k=3&amp;n=&amp;c=devnagari&amp;q='+t;})();">
+                            Inscript
+                        </a>
+                        <a class="dropdown-item"
+                            href="javascript:(t13nb=window.t13nb||function(l){var t=t13nb,d=document,o=d.body,c='createElement',a='appendChild',w='clientWidth',i=d[c]('span'),s=i.style,x=o[a](d[c]('script'));if(o){if(!t.l){t.l=x.id='t13ns';o[a](i).id='t13n';i.innerHTML='Loading Transliteration';s.cssText='z-index:99;font-size:18px;background:#FFF1A8;top:0';s.position=d.all?'absolute':'fixed';s.left=((o[w]-i[w])/2)+'px';x.src='https://t13n.googlecode.com/svn/trunk/blet/rt13n.js?l='+l}}else setTimeout(t,500)})('mr')">
+                            Google
+                        </a>
+                    </div>
                 </div>
-                <!-- <div class="mb-3">
+
+
+
+            </div>
+            <!-- <div class="mb-3">
   <p>Created at: <b> {{ $project->created_at }} </b></p>
   <p>Updated at: <b> {{ $project->updated_at }} </b></p>
   </div> -->
-                <div id="json-string-container"></div>
-                <input type="submit" id="update-button" class="btn btn-success " value="Save">
-                <div class="rounded-circle btn-secondary profile">//TODO Profile</div>
-            </div>
-            <!-- Flash Message -->
-            @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @elseif (session('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-            <div class="table-input-container">
-                <div id="table-container"></div>
-                <div class="d-flex justify-content-center mt-3">
-                    <button id="add-r-button" class="btn btn-secondary btn-block" onclick="addRows()" type="button"
-                        style="display:none">Add More
-                        Rows</button>
+            <div id="json-string-container"></div>
+            <input type="submit" id="update-button" class="btn btn-success " value="Save">
+            {{-- <div class="rounded-circle btn-secondary profile">//TODO Profile</div> --}}
+    </div>
+    <!-- Flash Message -->
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @elseif (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    <div class="table-input-container">
+        <div id="table-container"></div>
+        <div class="d-flex justify-content-center mt-3">
+            <button id="add-r-button" class="btn btn-secondary btn-block" onclick="addRows()" type="button"
+                style="display:none">Add More
+                Rows</button>
 
-                </div>
-            </div>
-            <!-- Add a hidden input field to store project data -->
-            <input type="hidden" name="project_data" id="project-data-input">
-            <div id="string-output"></div>
-        </form>
+        </div>
+    </div>
+    <!-- Add a hidden input field to store project data -->
+    <input type="hidden" name="project_data" id="project-data-input">
+    <div id="string-output"></div>
+    </form>
     </div>
     <div class="keyboard-container" id="keyboard-container">
         <div class="preview-input mb-3" id="keyboard-input">
