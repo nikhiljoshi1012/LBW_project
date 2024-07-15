@@ -301,6 +301,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
     
-    setInterval(autoSave, 3000);
+    setInterval(autoSave, 30000);
     generateTableFromSavedData();
 });

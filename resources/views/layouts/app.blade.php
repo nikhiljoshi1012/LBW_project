@@ -120,6 +120,10 @@
                             @endif
                         @else
                             <!-- Inside your navigation or wherever you want the button -->
+                            {{-- <img src="{{ asset('/images') }}/{{ Auth::user()->profile->picture ?? 'no-pic.jpg' }}"
+                                alt="avatar" class="rounded-circle bg-dark img-fluid" style="width: 50px;"> --}}
+                            <img src="{{ asset('/images') }}/{{ $profilePicture }}" alt="avatar"
+                                class="rounded-circle bg-dark img-fluid" style="width: 50px;">
 
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"

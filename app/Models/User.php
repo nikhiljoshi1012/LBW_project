@@ -44,4 +44,9 @@ use SoftDeletes;
             'password' => 'hashed',
         ];
     }
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
 }

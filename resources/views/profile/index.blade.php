@@ -24,19 +24,20 @@
                                 <div class="col-lg-4">
                                     <div class="card mb-4">
                                         <div class="card-body text-center">
-                                            <img src="{{ asset('/images') }}/{{ $userprofile->picture }}" alt="avatar"
+                                            <<img src="{{ asset('/images') }}/{{ $profilePicture }}" alt="avatar"
                                                 class="rounded-circle bg-dark img-fluid" style="width: 150px;">
 
-                                            <div class="row justify-content-center p-2">
-                                                <a href="javascript:void(0)" id="upload_pic" class="text-lg text-bold"
-                                                    data-toggle="modal" data-target="#ProfilePicModal">
-                                                    <i class="fa fa-pencil-alt"></i>
-                                                </a>
-                                            </div>
 
-                                            <h5 class="my-3">{{ $userinfo->name }}</h5>
-                                            <p class="text-muted mb-1">{{ $userinfo->email }}</p>
-                                            <div class="d-flex justify-content-center mb-2"></div>
+                                                <div class="row justify-content-center p-2">
+                                                    <a href="javascript:void(0)" id="upload_pic" class="text-lg text-bold"
+                                                        data-toggle="modal" data-target="#ProfilePicModal">
+                                                        <i class="fa fa-pencil-alt"></i>
+                                                    </a>
+                                                </div>
+
+                                                <h5 class="my-3">{{ $userinfo->name }}</h5>
+                                                <p class="text-muted mb-1">{{ $userinfo->email }}</p>
+                                                <div class="d-flex justify-content  -center mb-2"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -120,8 +121,9 @@
                     <div class="container-fluid">
                         <div class="row justify-content-center">
                             <div class="col-md-6">
-                                <img src="{{ asset('/images') }}/{{ $userprofile->picture }}" alt="avatar"
+                                <img src="{{ asset('/images') }}/{{ $profilePicture }}" alt="avatar"
                                     class="rounded-circle bg-dark img-fluid" style="width: 150px;">
+
                             </div>
                             <div class="col-md-6">
                                 <form id="avatar-form" enctype="multipart/form-data" action="{{ route('updatepic') }}"

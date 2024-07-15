@@ -25,39 +25,40 @@ class ProfileController extends Controller
         $current_userid = Auth::user()->id;
         $userinfo = User::where('id', '=', $current_userid)->first();
         $userprofile = Profile::where('user_id', '=', $current_userid)->first();
-        $profilePicture = $userprofile->picture ?? 'default.jpg'; // Use a default image if no profile picture exists
+        $profilePicture = $userprofile->picture ?? 'no-pic.jpg'; // Use a default image if no profile picture exists
     
         return view('profile.index', compact('userprofile', 'userinfo', 'profilePicture'));
     }
 
     
     public function updatepic(Request $request)
-    {
-        if ($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar');
-            $userid = $request->input('userid');
-            $uploadedfile = time() . '_' . $avatar->getClientOriginalName();
-            
-            // Ensure the directory exists
-            if (!file_exists(public_path('images'))) {
-                mkdir(public_path('images'), 0777, true);
-            }
-    
-            $imagine = new Imagine();
-            $size = new Box(300, 300);
-            
-            $imagine->open($avatar->getPathname())
-                    ->resize($size)
-                    ->save(public_path('images/' . $uploadedfile));
-            
-            $user = Profile::where('user_id', '=', $userid)->first();
-            $user->picture = $uploadedfile;
-            $user->save();
-        }
-        Alert::success('Success!', 'Profile picture updated successfully!');
+{
+    if ($request->hasFile('avatar')) {
+        $avatar = $request->file('avatar');
+        $userid = $request->input('userid');
+        $uploadedfile = time() . '_' . $avatar->getClientOriginalName();
 
-        return redirect()->route('profile.index');
+        // Ensure the directory exists
+        if (!file_exists(public_path('images'))) {
+            mkdir(public_path('images'), 0777, true);
+        }
+
+        $imagine = new Imagine();
+        $size = new Box(300, 300);
+
+        $imagine->open($avatar->getPathname())
+                ->resize($size)
+                ->save(public_path('images/' . $uploadedfile));
+
+        $user = Profile::where('user_id', '=', $userid)->first();
+        $user->picture = $uploadedfile;
+        $user->save();
     }
+    Alert::success('Success!', 'Profile picture updated successfully!');
+
+    return redirect()->route('profile.index');
+}
+
 
     public function updateinfo(Request $request)
     {
