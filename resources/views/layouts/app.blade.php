@@ -64,6 +64,9 @@
                                 </li>
                             @endif
                         @else
+                            <!-- Inside your navigation or wherever you want the button -->
+                            <a href="{{ route('projects.recycleBin') }}" class="btn btn-primary">Recycle Bin</a>
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

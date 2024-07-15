@@ -12,6 +12,17 @@ use App\Http\Controllers\ProfileController;
 
 
 
+
+
+//Soft delete
+
+Route::get('/projects/recycle-bin', [App\Http\Controllers\ProjectController::class, 'recycleBin'])->name('projects.recycleBin');
+Route::post('/projects/restore/{id}', [App\Http\Controllers\ProjectController::class, 'restore'])->name('projects.restore');
+Route::delete('/projects/force-delete/{id}', [App\Http\Controllers\ProjectController::class, 'forceDelete'])->name('projects.forceDelete');
+
+
+
+
 //Custom auth routes
 // Routes that do not require authentication
 Route::get('login', [AuthController::class, 'index'])->name('login');
@@ -27,7 +38,9 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-
+Route::get('/', function () {
+    return view('land');
+});
 
 
 

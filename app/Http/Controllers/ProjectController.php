@@ -225,16 +225,39 @@ class ProjectController extends Controller
     public function destroy($id)
     {
         $project = Project::findOrFail($id);
-
-        
+    
         // Ensure the authenticated user is the owner of the project
         if ($project->user_id !== Auth::id()) {
             abort(403, 'Unauthorized action.');
-            return redirect()->route('dashboard')->with('error', 'Unauthorized action.');
         }
-
-        $project->delete();
-
+    
+        $project->delete(); // This will perform a soft delete
+    
         return redirect()->route('dashboard')->with('success', 'Project deleted successfully.');
+    }
+
+
+    public function recycleBin()
+    {
+        $projects = Project::onlyTrashed()->where('user_id', Auth::id())->get();
+        return view('projects.recycle-bin', compact('projects'));
+    }
+
+    public function restore($id)
+    {
+        $project = Project::withTrashed()->where('id', $id)->first();
+        if ($project) {
+            $project->restore();
+        }
+        return redirect()->route('projects.recycleBin')->with('success', 'Project restored successfully.');
+    }
+
+    public function forceDelete($id)
+    {
+        $project = Project::withTrashed()->where('id', $id)->first();
+        if ($project) {
+            $project->forceDelete();
+        }
+        return redirect()->route('projects.recycleBin')->with('success', 'Project permanently deleted.');
     }
 }
