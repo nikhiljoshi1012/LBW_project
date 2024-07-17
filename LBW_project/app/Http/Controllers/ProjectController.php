@@ -115,8 +115,11 @@ class ProjectController extends Controller
 
     public function setVisibility(Request $request, $id)
     {
-        
-        
+        $projectStates = ['private','read_only', 'public'];
+        if(!in_array($request->input('visibility'), $projectStates)) {
+            return response()->json(['success' => false]);
+        }
+
         $project = Project::findOrFail($id);
         if($project->user_id !== Auth::id()) {
             abort(403, 'Unauthorized action.');

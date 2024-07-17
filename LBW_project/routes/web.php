@@ -23,3 +23,4 @@ Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->mid
 Route::post('/projects/{project}/copy', [ProjectController::class, 'copyProject'])->middleware('auth')->name('projects.copy');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::post('/projects/{project}/setVisibility', [ProjectController::class, 'setVisibility'])->middleware('auth')->name('projects.setVisibility');
