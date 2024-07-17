@@ -82,7 +82,7 @@ class ProjectController extends Controller
         $data = [
             "cells" => [],
             "rowCount" => 14,
-            "columnCount" => 5
+            "columnCount" => 14
         ];
         $project->data = $data; // Store decoded data
 
