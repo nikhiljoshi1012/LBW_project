@@ -261,14 +261,103 @@ function createKeyboard() {
     }
     document.getElementById("showSwarKeyboard").checked = true;
 }
+// Select the element you want to observe
+const keyboardHeader = document.getElementById('keyboard-container-header');
+
+// Create a callback function to execute when mutations are observed
+const callback = function(mutationsList, observer) {
+    for(const mutation of mutationsList) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'data-draggable') {
+            
+        }
+    }
+};
+
+// Create an instance of MutationObserver with the callback function
+const observer = new MutationObserver(callback);
+
+// Options for the observer (which mutations to observe)
+const config = { attributes: true, childList: false, subtree: false };
+
+// Start observing the target node for configured mutations
+observer.observe(keyboardHeader, config);
+
+// Later, you can stop observing
+// observer.disconnect();
+
+function toggleDraggable() {
+    const keyboardHeader = document.getElementById('keyboard-container-header');
+    const keyboardContainer = document.getElementById("keyboard-container");
+    if (keyboardHeader.dataset.draggable === "true") {
+        keyboardHeader.dataset.draggable = "false";
+        keyboardContainer.classList.remove("draggable");
+        keyboardContainer.classList.add("sticky");
+    } else {
+        keyboardHeader.dataset.draggable = "true";
+        keyboardContainer.classList.remove("sticky");
+        keyboardContainer.classList.add("draggable");
+        dragElement(document.getElementById("keyboard-container"));
+    }
+}
+function dragElement(elmnt) {
+    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    const header = document.getElementById(elmnt.id + "-header");
+    if (header && header.dataset.draggable === "false") {
+        return;
+    }
+
+    if (header) {
+        // If present, the header is where you move the DIV from:
+        header.onmousedown = dragMouseDown;
+    } else {
+        // Otherwise, move the DIV from anywhere inside the DIV:
+        elmnt.onmousedown = dragMouseDown;
+    }
+
+    function dragMouseDown(e) {
+        if (header && header.dataset.draggable === "false") {
+            return;
+        }
+        e = e || window.event;
+        e.preventDefault();
+        // Get the mouse cursor position at startup:
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmousemove = elementDrag;
+        document.onmouseup = closeDragElement;
+    }
+
+    function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // Calculate the new cursor position:
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        // Set the element's new position:
+        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+    }
+
+    function closeDragElement() {
+        // Stop moving when mouse button is released:
+        document.onmouseup = null;
+        document.onmousemove = null;
+    }
+}
 
 function toggleKeyboard() {
     const showSwarKeyboard = document.getElementById("showSwarKeyboard");
     const keyboardContainer = document.getElementById("keyboard-container");
-    if (!showSwarKeyboard.checked) {
+    const style = window.getComputedStyle(keyboardContainer);
+    
+    if (style.display === "flex"|| style.display === "block") {
         keyboardContainer.style.display = "none";
+        showSwarKeyboard.checked = false;
     } else {
         keyboardContainer.style.display = "flex";
+        showSwarKeyboard.checked = true;
     }
     console.log(showSwarKeyboard.checked);
 }

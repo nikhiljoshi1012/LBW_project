@@ -29,7 +29,7 @@
       <div class="userInput d-flex flex-row mb-4 p-4">
         <div class="input-group">
 
-          <div class="btn btn-lg rounded-circle" id="backButton"> <svg width="64px" height="64px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" fill="0" stroke="0" stroke-width="1.056">
+          <div class="btn btn-lg rounded-circle" id="backButton" title="Go Back To Dashboard"> <svg width="64px" height="64px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" fill="0" stroke="0" stroke-width="1.056">
               <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
               <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.576"></g>
               <g id="SVGRepo_iconCarrier">
@@ -51,7 +51,7 @@
             <label for="project-name">Project Name</label>
 
           </div>
-          <button id="load-table-button" class="btn btn-primary " type="button"><svg height="64px" width="64px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" fill="#ffffff" transform="matrix(-1, 0, 0, 1, 0, 0)rotate(0)" stroke="#ffffff" stroke-width="27.136000000000003">
+          <button id="load-table-button" class="btn btn-primary " type="button" title="Reload"><svg height="64px" width="64px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" fill="#ffffff" transform="matrix(-1, 0, 0, 1, 0, 0)rotate(0)" stroke="#ffffff" stroke-width="27.136000000000003">
               <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
               <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
               <g id="SVGRepo_iconCarrier">
@@ -152,7 +152,7 @@
               </div>
               <div class="dropdown-item-text border-top">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="showSwarKeyboard" onchange="toggleKeyboard()">
+                  <input class="form-check-input" type="checkbox" value="" id="showSwarKeyboard" onchange="toggleKeyboard()" checked>
                   <label class="form-check-label" for="showSwarKeyboard">
                     Show Swar Keyboard
                   </label>
@@ -184,20 +184,16 @@
               <a class="dropdown-item" href="javascript:(function(){if(typeof gamabhanaExt != 'undefined'){__predefKb='#inscript#';try { handlePreDefKB();} catch(x1) {}; gamabhanaExt.changeLayout(null); __predefLangIndex=0; try { handlePreDefLang(); } catch(x2) {};	attemptRun();return; };t=new Date().getTime();document.body.appendChild(document.createElement('script')).src='https://www.gamabhana.com/gamabhanaWidget/?mode=custom&amp;l=0&amp;k=3&amp;n=&amp;c=devnagari&amp;q='+t;})();">
                 Inscript
               </a>
-              <a class="dropdown-item" href="javascript:(t13nb=window.t13nb||function(l){var t=t13nb,d=document,o=d.body,c='createElement',a='appendChild',w='clientWidth',i=d[c]('span'),s=i.style,x=o[a](d[c]('script'));if(o){if(!t.l){t.l=x.id='t13ns';o[a](i).id='t13n';i.innerHTML='Loading Transliteration';s.cssText='z-index:99;font-size:18px;background:#FFF1A8;top:0';s.position=d.all?'absolute':'fixed';s.left=((o[w]-i[w])/2)+'px';x.src='https://t13n.googlecode.com/svn/trunk/blet/rt13n.js?l='+l}}else setTimeout(t,500)})('mr')">
-                Google
-              </a>
             </div>
           </div>
 
 
 
         </div>
-        <!-- <div class="mb-3">
-  <p>Created at: <b> {{ $project->created_at }} </b></p>
-  <p>Updated at: <b> {{ $project->updated_at }} </b></p>
-  </div> -->
+        
         <div id="json-string-container"></div>
+        
+
         <input type="submit" id="update-button" class="btn btn-success " value="Save">
         <div class="rounded-circle btn-secondary profile">//TODO Profile</div>
       </div>
@@ -226,8 +222,27 @@
       <div id="string-output"></div>
     </form>
   </div>
-  <div class="keyboard-container" id="keyboard-container">
-    <div class="preview-input mb-3" id="keyboard-input">
+  <div class="keyboard-container sticky" id="keyboard-container">
+    <div class="keyboard-header" id="keyboard-container-header" data-draggable="false">
+      <span class="keyboard-title">Swar Keyboard</span>
+      <span class="keyboard-toolbar">
+      <span class="keyboard-min btn-sm btn-secondary rounded-circle" onclick="">-</span>
+      <span class="keyboard-pop btn-sm btn-secondary rounded-circle" onclick="toggleDraggable()" title="Pop-out Keyboard">
+        <svg fill="#ffffff" width="10px" height="10px" viewBox="0 0 36 36" version="1.1" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+          <g id="SVGRepo_iconCarrier">
+            <title></title>
+            <path class="clr-i-outline clr-i-outline-path-1" d="M27,33H5a2,2,0,0,1-2-2V9A2,2,0,0,1,5,7H15V9H5V31H27V21h2V31A2,2,0,0,1,27,33Z"></path>
+            <path class="clr-i-outline clr-i-outline-path-2" d="M18,3a1,1,0,0,0,0,2H29.59L15.74,18.85a1,1,0,1,0,1.41,1.41L31,6.41V18a1,1,0,0,0,2,0V3Z"></path>
+            <rect x="0" y="0" width="36" height="36" fill-opacity="0"></rect>
+          </g>
+        </svg>
+      </span>
+      <span class="keyboard-close btn-sm btn-secondary rounded-circle" onclick="toggleKeyboard()"><svg width="10px" height="10px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#ffffff" stroke-width="3.6479999999999997"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.768"></g><g id="SVGRepo_iconCarrier"><line x1="16" y1="16" x2="48" y2="48"></line><line x1="48" y1="16" x2="16" y2="48"></line></g></svg></button>
+      </span>
+    </div>
+      <div class="preview-input mb-3" id="keyboard-input">
       <code>
         <input type="text" id="preview-inputbox" class="preview-inputbox" value="" onmouseup="getSelectedText()" class="form-control" />
       </code>
@@ -360,7 +375,16 @@
     const projectData = @json($project->data);
     const projectId = "{{ $project->id }}";
     const csrfToken = "{{ csrf_token() }}";
+    const visibilty = "{{ $project->visibility }}";
     const url = `{{ route('projects.update', $project->id) }}`;
+
+    window.globalConsts={
+      projectData,
+      projectId,
+      csrfToken,
+      visibilty,
+      url
+    }
 
     function toggleCheckBoxes(checkbox) {
       console.log(checkbox.checked);
@@ -395,15 +419,6 @@
         console.log(activeSelections);
       }
     }
-
-    const el = document.querySelector(".file-item-header")
-    const observer = new IntersectionObserver(
-      ([e]) => e.target.classList.toggle("is-sticky", e.intersectionRatio < 3), {
-        threshold: [1]
-      }
-    );
-
-    observer.observe(el);
   </script>
 </body>
 

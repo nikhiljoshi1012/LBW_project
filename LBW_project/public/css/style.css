@@ -177,11 +177,12 @@ table.composition tr.bold-top-border td {
     height: 2rem;
     font-size: 1em;
     margin: 10px 0;
+    margin-top: 35px;
 }
 
 /* Keyboard Container Styles */
 .keyboard-container {
-    display: none;
+    display: none; /* Initially hidden, can be toggled programmatically */
     grid-template-columns: auto;
     grid-template-rows: repeat(2, auto);
     gap: 10px;
@@ -189,14 +190,67 @@ table.composition tr.bold-top-border td {
     align-items: center;
     justify-content: center;
     margin-top: 20px;
-    background-color: #f0f0f0;
-    padding: 10px;
+    background-color: #f0f0f0; /* Light grey background */
+    padding: 20px; /* Increased padding for better spacing */
     border-radius: 10px;
     box-shadow: 
-        0 4px 8px rgba(0, 0, 0, 0.1), 
-        0 8px 16px rgba(0, 0, 0, 0.1);
+        0 4px 8px rgba(0, 0, 0, 0.15), /* Slightly darker shadow for better depth */
+        0 10px 20px rgba(0, 0, 0, 0.1); /* Increased spread for a more pronounced effect */
+    z-index: 100; /* Higher z-index to ensure it's above most other elements */
+}
+
+.sticky {
+    position: -webkit-sticky; /* For Safari */
     position: sticky;
-    bottom:0 ;
+    bottom: 0px; /* Increased distance from the bottom for better visibility */
+    right: 20px; /* Align to the right for a floating action button (FAB) effect */
+    display: flex; /* Ensures content within is properly aligned */
+    justify-content: center;
+    align-items: center;
+    cursor: pointer; /* Indicates the element is interactive */
+}
+
+.draggable {
+    display: block;
+    position: fixed; /* Use fixed to keep it in view even on scroll */
+    bottom: 20px; /* Consistent with sticky positioning */
+    right: 20px; /* Consistent with sticky positioning */
+    width: auto; /* Adjust width based on content */
+    cursor: move; /* Indicates the element can be moved */
+    padding: 15px; /* Sufficient padding for touch or drag interactions */
+    border: 2px dashed #ccc; /* Dashed border to indicate it's movable */
+    background-color: #ffffff; /* Solid white background for contrast */
+    box-shadow: 
+        0 5px 15px rgba(0,0,0,0.2); /* Enhanced shadow for better focus when active */
+}
+#keyboard-header{
+    width: 100%;
+    position: absolute;
+    top: 0;
+    padding: 5px;  
+    background: rgb(182 181 181);  
+}
+
+span.keyboard-toolbar{
+    position: absolute;
+    right: 5px;
+}
+
+span.keyboard-toolbar>span{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    cursor: pointer;
+    
+}
+span.keyboard-toolbar>span>svg{
+    position: absolute;
+    top: auto;
+    left: auto;
+    right: auto;
+    transform: translateX(-50%);
+
 }
 
 /* Key Layout Styles */
