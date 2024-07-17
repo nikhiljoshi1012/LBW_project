@@ -134,122 +134,116 @@
 
                         </div>
                     </div>
+        </form>
 
-                    <div class="dropdown tool edit-selector">
-                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Edit
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <div class="dropdown tool edit-selector">
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Edit
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-                            <a class="dropdown-item"
-                                href="javascript:(function(){if(getActiveCell()) navigator.clipboard.writeText(getActiveCell().value);})()">
-                                Copy
-                            </a>
-                            <a class="dropdown-item"
-                                href="javascript:(function(){if(getActiveCell()) navigator.clipboard.readText().then((copiedText) => {getActiveCell().value=copiedText;});})()">
-                                Paste
-                            </a>
-                            <a class="dropdown-item border-top" href="">
-                                Clear Sheet
-                            </a>
-                        </div>
-                    </div>
+                <a class="dropdown-item"
+                    href="javascript:(function(){if(getActiveCell()) navigator.clipboard.writeText(getActiveCell().value);})()">
+                    Copy
+                </a>
+                <a class="dropdown-item"
+                    href="javascript:(function(){if(getActiveCell()) navigator.clipboard.readText().then((copiedText) => {getActiveCell().value=copiedText;});})()">
+                    Paste
+                </a>
+                <a class="dropdown-item border-top" href="">
+                    Clear Sheet
+                </a>
+            </div>
+        </div>
 
-                    <div class="dropdown tool view-selector">
-                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            View
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <div class="dropdown-item-text">
-                                <div class="resizeInput-container">
-                                    <div class="form-floating has-validation">
-                                        <input type="text" class="form-control resizeInput" id="resizeRow"
-                                            placeholder="Rows">
-                                        <label for="resizeRow" style="font-size:small;">Tracks</label>
-                                        <div id="resizeRowFeedback" class="invalid-feedback "
-                                            style="font-size:small">
-                                            Invalid Track Count
-                                        </div>
-                                    </div>
-                                    <b>X</b>
-                                    <div class="form-floating has-validation">
-                                        <input type="text" class="form-control resizeInput" id="resizeCol"
-                                            placeholder="Columns">
-                                        <label for="resizeCol" style="font-size:small;">Beats</label>
-                                        <div id="resizeRowFeedback" class="invalid-feedback "
-                                            style="font-size:small">
-                                            Invalid Beat Count
-                                        </div>
-                                    </div>
-                                    <button type="button" class="btn btn-success" onclick="resizeTable()"
-                                        id="resize-button">Resize</button>
-                                </div>
-                            </div>
-                            <div class="dropdown-item-text border-top">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value=""
-                                        id="showSwarKeyboard" onchange="toggleKeyboard()">
-                                    <label class="form-check-label" for="showSwarKeyboard">
-                                        Show Swar Keyboard
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="dropdown-item-text border-top">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value=""
-                                        id="showSwarKeyboard" onchange="toggleDevKeyboard()">
-                                    <label class="form-check-label" for="showSwarKeyboard">
-                                        Show Devanagari Keyboard
-                                    </label>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="dropdown tool keyboard-selector">
-                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Keyboard
-                        </button>
-                        <div class="text-center">
-                            <div class="spinner-border" role="status" id="autosave-spinner">
-                                <span class="visually-hidden">Loading...</span>
+        <div class="dropdown tool view-selector">
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                View
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <div class="dropdown-item-text">
+                    <div class="resizeInput-container">
+                        <div class="form-floating has-validation">
+                            <input type="text" class="form-control resizeInput" id="resizeRow"
+                                placeholder="Rows">
+                            <label for="resizeRow" style="font-size:small;">Tracks</label>
+                            <div id="resizeRowFeedback" class="invalid-feedback " style="font-size:small">
+                                Invalid Track Count
                             </div>
                         </div>
+                        <b>X</b>
+                        <div class="form-floating has-validation">
+                            <input type="text" class="form-control resizeInput" id="resizeCol"
+                                placeholder="Columns">
+                            <label for="resizeCol" style="font-size:small;">Beats</label>
+                            <div id="resizeRowFeedback" class="invalid-feedback " style="font-size:small">
+                                Invalid Beat Count
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-success" onclick="resizeTable()"
+                            id="resize-button">Resize</button>
                     </div>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item"
-                            href="javascript:(function(){if(typeof gamabhanaExt != 'undefined') {__predefKb='#gamabhana#'; try { handlePreDefKB(); } catch(x1) {}; gamabhanaExt.changeLayout(null); __predefLangIndex=0; try {handlePreDefLang();} catch(x2) {}; attemptRun();return; } else { t=new Date().getTime();document.body.appendChild(document.createElement('script')).src='https://www.gamabhana.com/gamabhanaWidget/?mode=custom&amp;l=0&amp;k=1&amp;n=&amp;c=devnagari&amp;q='+t;}})();">
-                            gamabhana
-                        </a>
-                        <a class="dropdown-item"
-                            href="javascript:(function(){if(typeof gamabhanaExt != 'undefined'){__predefKb='#fontfreedom#'; try { handlePreDefKB();} catch(x1) {}; gamabhanaExt.changeLayout(null); __predefLangIndex=0; try { handlePreDefLang();} catch(x2) {}; 	attemptRun();return; };t=new Date().getTime();document.body.appendChild(document.createElement('script')).src='https://www.gamabhana.com/gamabhanaWidget/?mode=custom&amp;l=0&amp;k=2&amp;n=&amp;c=devnagari&amp;q='+t;})();">
-                            fontfreedom
-                        </a>
-                        <a class="dropdown-item"
-                            href="javascript:(function(){if(typeof gamabhanaExt != 'undefined'){__predefKb='#inscript#';try { handlePreDefKB();} catch(x1) {}; gamabhanaExt.changeLayout(null); __predefLangIndex=0; try { handlePreDefLang(); } catch(x2) {};	attemptRun();return; };t=new Date().getTime();document.body.appendChild(document.createElement('script')).src='https://www.gamabhana.com/gamabhanaWidget/?mode=custom&amp;l=0&amp;k=3&amp;n=&amp;c=devnagari&amp;q='+t;})();">
-                            Inscript
-                        </a>
-                        <a class="dropdown-item"
-                            href="javascript:(t13nb=window.t13nb||function(l){var t=t13nb,d=document,o=d.body,c='createElement',a='appendChild',w='clientWidth',i=d[c]('span'),s=i.style,x=o[a](d[c]('script'));if(o){if(!t.l){t.l=x.id='t13ns';o[a](i).id='t13n';i.innerHTML='Loading Transliteration';s.cssText='z-index:99;font-size:18px;background:#FFF1A8;top:0';s.position=d.all?'absolute':'fixed';s.left=((o[w]-i[w])/2)+'px';x.src='https://t13n.googlecode.com/svn/trunk/blet/rt13n.js?l='+l}}else setTimeout(t,500)})('mr')">
-                            Google
-                        </a>
+                </div>
+                <div class="dropdown-item-text border-top">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="showSwarKeyboard"
+                            onchange="toggleKeyboard()">
+                        <label class="form-check-label" for="showSwarKeyboard">
+                            Show Swar Keyboard
+                        </label>
+                    </div>
+                </div>
+                <div class="dropdown-item-text border-top">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="showSwarKeyboard"
+                            onchange="toggleDevKeyboard()">
+                        <label class="form-check-label" for="showSwarKeyboard">
+                            Show Devanagari Keyboard
+                        </label>
                     </div>
                 </div>
 
-
-
             </div>
-            <!-- <div class="mb-3">
+        </div>
+
+        <div class="dropdown tool keyboard-selector">
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Keyboard
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item"
+                    href="javascript:(function(){if(typeof gamabhanaExt != 'undefined') {__predefKb='#gamabhana#'; try { handlePreDefKB(); } catch(x1) {}; gamabhanaExt.changeLayout(null); __predefLangIndex=0; try {handlePreDefLang();} catch(x2) {}; attemptRun();return; } else { t=new Date().getTime();document.body.appendChild(document.createElement('script')).src='https://www.gamabhana.com/gamabhanaWidget/?mode=custom&amp;l=0&amp;k=1&amp;n=&amp;c=devnagari&amp;q='+t;}})();">
+                    gamabhana
+                </a>
+                <a class="dropdown-item"
+                    href="javascript:(function(){if(typeof gamabhanaExt != 'undefined'){__predefKb='#fontfreedom#'; try { handlePreDefKB();} catch(x1) {}; gamabhanaExt.changeLayout(null); __predefLangIndex=0; try { handlePreDefLang();} catch(x2) {}; attemptRun();return; };t=new Date().getTime();document.body.appendChild(document.createElement('script')).src='https://www.gamabhana.com/gamabhanaWidget/?mode=custom&amp;l=0&amp;k=2&amp;n=&amp;c=devnagari&amp;q='+t;})();">
+                    fontfreedom
+                </a>
+                <a class="dropdown-item"
+                    href="javascript:(function(){if(typeof gamabhanaExt != 'undefined'){__predefKb='#inscript#';try { handlePreDefKB();} catch(x1) {}; gamabhanaExt.changeLayout(null); __predefLangIndex=0; try { handlePreDefLang(); } catch(x2) {};attemptRun();return; };t=new Date().getTime();document.body.appendChild(document.createElement('script')).src='https://www.gamabhana.com/gamabhanaWidget/?mode=custom&amp;l=0&amp;k=3&amp;n=&amp;c=devnagari&amp;q='+t;})();">
+                    Inscript
+                </a>
+                {{-- <a class="dropdown-item"
+                    href="javascript:(t13nb=window.t13nb||function(l){var t=t13nb,d=document,o=d.body,c='createElement',a='appendChild',w='clientWidth',i=d[c]('span'),s=i.style,x=o[a](d[c]('script'));if(o){if(!t.l){t.l=x.id='t13ns';o[a](i).id='t13n';i.innerHTML='Loading Transliteration';s.cssText='z-index:99;font-size:18px;background:#FFF1A8;top:0';s.position=d.all?'absolute':'fixed';s.left=((o[w]-i[w])/2)+'px';x.src='https://t13n.googlecode.com/svn/trunk/blet/rt13n.js?l='+l}}else setTimeout(t,500)})('mr')">
+                    Google
+                </a> --}} {{-- Not working --}}
+            </div>
+        </div>
+
+
+
+
+    </div>
+    <!-- <div class="mb-3">
   <p>Created at: <b> {{ $project->created_at }} </b></p>
   <p>Updated at: <b> {{ $project->updated_at }} </b></p>
   </div> -->
-            <div id="json-string-container"></div>
-            <input type="submit" id="update-button" class="btn btn-success " value="Save">
-            {{-- <div class="rounded-circle btn-secondary profile">//TODO Profile</div> --}}
+    <div id="json-string-container"></div>
+    <input type="submit" id="update-button" class="btn btn-success " value="Save">
+    {{-- <div class="rounded-circle btn-secondary profile">//TODO Profile</div> --}}
     </div>
     <!-- Flash Message -->
     @if (session('success'))
